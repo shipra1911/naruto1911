@@ -37,284 +37,247 @@
 
 <body>
 
-    <button onclick="copyText(text1)">10.1 pos/neg</button>
-    <button onclick=" copyText(text2)">2 existing Create </button>
-    <button onclick="copyText(text3)">3 string comparison </button>
-    <button onclick="copyText(text4)">4 file has a permission </button>
-    <button onclick="copyText(text5)">5 grade</button>
-    <button onclick="copyText(text6)">6+ve or –ve usin elif</button>
-    <button onclick="copyText(text7)">7 week </button>
-    <button onclick="copyText(text8)">8 pattern </button>
-    <button onclick="copyText(text9)">9 Menu Driven </button>
-    <button onclick="copyText(text10)">10 sum: whileloop</button>
-    <button onclick="copyText(text11)">11 r sum: do..until </button>
-    <button onclick="copyText(text12">12 illustrate the use of For Loop </button>
-    <button onclick="copyText(text13)">13 summation 1+2+3+ -----n </button>
-    <button onclick="copyText(text14)">14 table </button>
-    <button onclick="copyText(text15)">A.1 circle  </button>
-    <button onclick="copyText(text16)">A.2 cylinder</button>
-    <button onclick="copyText(text17)">A.3 temperature ctof </button>
-    <button onclick="copyText(text18)">A.4 rupees/paisa </button>
-    <button onclick="copyText(text21)">A.6 leap year </button>
-    <button onclick="copyText(text22)"> a.7  1 to 100:</button>
-   
+    <button onclick="copyText(text1)">1a using Naive Bayes algorithm</button>
+    <button onclick=" copyText(text2)">1b using the SVM classifier</button>
+    <button onclick="copyText(text3)">2a clustering technique KMeans </button>
+    <button onclick="copyText(text4)">2b  using hierarchical clustering</button>
+    <button onclick="copyText(text5)">3 Perform linear regression</button>
+    <button onclick="copyText(text6)">4 Perform logistic regression</button>
+    <button onclick="copyText(text7)">5 Perform data analysis</button>
     
     
     <p id="copiedMsg"></p>
     <script>
-        var text1 = `
+        var text1 = `#Pract 1 :using Naive Bayes algorithm
 
-echo enter any number 
-read n
-if test $n -gt 0
-then 
-	echo $n is positive
-else
-	echo $n is negative 
-fi 
-
+import numpy as np
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+df=pd.read_csv('/content/spam (1).csv', encoding='latin-1')
+df=df[['Message','Category']]
+df.columns=['SMS','Type']
+countvec =
+CountVectorizer(ngram_range=(1,4),stop_words='english',strip_accents='unic
+ode',max_features=1000)
+bow = countvec.fit_transform(df.SMS)
+X_train = bow.toarray()
+Y_train = df.Type.values
+mnb = MultinomialNB()
+mnb.fit(X_train, Y_train)
+text1 = countvec.transform(['free gifts for all'])
+print('free gifts for all')
+print(mnb.predict(text1))
+text2 = countvec.transform(['we will go for lunch'])
+print('we will go for lunch')
+print(mnb.predict(text2))
 
     `;
-        var text2 = `
-        echo enter the file name 
-read fname 
-if [ -f $fname ]
-then
-	echo the file Exists.
-else	
-	echo the file with  name $does not exists 
-fi
+        var text2 = `#Practical 1b - 1busing the SVM classifier
 
+        #Practical 1b - 1busing the SVM classifier
+
+        from sklearn import svm, datasets
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+iris = datasets.load_iris()
+X = iris.data[:, :2] # we only take the first two features
+y = iris.target
+x_train, x_test, y_train, y_test = train_test_split(X, y, random_state =
+0, test_size = 0.3)
+clf = svm.SVC(kernel='linear', C=1).fit(x_train, y_train)
+#clf = svm.SVC(kernel='rbf', C=1,gamma=0).fit(x_train, y_train)
+classifier_predictions = clf.predict(x_test)
+print(accuracy_score(y_test, classifier_predictions)*100)
+h = 0.02
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h),np.arange(y_min, y_max,
+h))
+Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.3)
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm)
+plt.xlabel('Sepal length')
+plt.ylabel('Sepal width')
+plt.xlim(xx.min(), xx.max())
+plt.ylim(yy.min(), yy.max())
+#plt.xticks(())
+#plt.yticks(())
+plt.title("Linear")
+plt.show()
 
 `;
 
         var text3 = `
+        #Pract 2 - 2 clustering technique(KMeans 
 
- echo enter two strings 
-read str1
-read str2
-if [ $str1 = $str2 ]
-then
-	echo the strings are identical 
-else
-	echo string are not identical 
-fi 
-   
+        import numpy as nm
+import matplotlib.pyplot as mtp
+import pandas as pd
+dataset = pd.read_csv('/content/Mall_Customers - Mall_Customers (1).csv')
+x = dataset.iloc[:, [3, 4]].values
+from sklearn.cluster import KMeans
+wcss_list= [] #Initializing the list for the values of WCSS
+#Using for loop for iterations from 1 to 10.
+for i in range(1, 11):
+kmeans = KMeans(n_clusters=i, init='k-means++', random_state= 42)
+kmeans.fit(x)
+wcss_list.append(kmeans.inertia_)
+mtp.plot(range(1, 11), wcss_list)
+mtp.title('The Elobw Method Graph')
+mtp.xlabel('Number of clusters(k)')
+mtp.ylabel('wcss_list')
+mtp.show()
+kmeans = KMeans(n_clusters=5, init='k-means++', random_state= 42)
+y_predict= kmeans.fit_predict(x)
+print(y_predict)
+mtp.scatter(x[y_predict == 0, 0], x[y_predict == 0, 1], s = 100, c =
+'blue', label = 'Cluster 1') #for first cluster
+mtp.scatter(x[y_predict == 1, 0], x[y_predict == 1, 1], s = 100, c =
+'green', label = 'Cluster 2') #for second cluster
+mtp.scatter(x[y_predict== 2, 0], x[y_predict == 2, 1], s = 100, c = 'red',
+label = 'Cluster 3') #for third cluster
+mtp.scatter(x[y_predict == 3, 0], x[y_predict == 3, 1], s = 100, c =
+'cyan', label = 'Cluster 4') #for fourth cluster
+mtp.scatter(x[y_predict == 4, 0], x[y_predict == 4, 1], s = 100, c =
+'magenta', label = 'Cluster 5') #for fifth cluster
+mtp.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1],
+s = 300, c = 'yellow', label = 'Centroid')
+mtp.title('Clusters of customers')
+mtp.xlabel('Annual Income (k$)')
+mtp.ylabel('Spending Score (1-100)')
+mtp.legend()
+mtp.show()
 `;
 
-        var text4 = `
-        echo enter the file name:
-read fname 
-if [ -w $fname ]
-then 
-	echo Type text to append.To stop press ctrl + D.
-	cat >> $fname 
-else 
-	echo the has no write permission 
-fi 
+        var text4 = ` # 2b using hierarchical clustering
 
+        import pandas as pd
+import numpy as nm
+import matplotlib.pyplot as plt
+%matplotlib Inline
+data = pd.read_csv('/content/Wholesale customers data - Wholesale
+customers data (1).csv')
+data.head()
+from sklearn.preprocessing import normalize
+data_scaled = normalize(data)
+data_scaled = pd.DataFrame(data_scaled, columns=data.columns)
+data_scaled.head()
+import scipy.cluster.hierarchy as shc
+plt.figure(figsize=(10,7))
+plt.title("Dendograms")
+dend = shc.dendrogram(shc.linkage(data_scaled, method='ward'))
+plt.axhline(y=6, color='r', linestyle='--')
+from sklearn.cluster import AgglomerativeClustering
+cluster = AgglomerativeClustering(n_clusters=2, metric='euclidean',
+linkage='ward')
+cluster.fit_predict(data_scaled)
+plt.figure(figsize=(10, 7))
+plt.scatter(data_scaled['Milk'], data_scaled['Grocery'],
+c=cluster.labels_)
 `;
 
-        var text5 = `
-        echo "Enter percentage:"
-read percentage
-grade=""
-case $percentage in
-100) grade="A+" ;;
-90|91|92|93|94|95|96|97|98|99) grade="A" ;;
-80|81|82|83|84|85|86|87|88|89) grade="B" ;;
-70|71|72|73|74|75|76|77|78|79) grade="C" ;;
-60|61|62|63|64|65|66|67|68|69) grade="D" ;;
-*) grade="Fail" ;;
-esac
-echo "Grade: $grade"
-        
+        var text5 = `#3 Perform linear regression
 
-
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset = pd.read_csv('/content/salary_data - salary_data.csv')
+X = dataset.iloc[: , :-1].values
+y = dataset.iloc[: , -1].values
+print (dataset.head())
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3,
+random_state = 0)
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+y_pred = regressor.predict(X_test)
+pd.DataFrame(data={'Actuals': y_test, 'Predictions': y_pred})
+plt.scatter(X_train, y_train, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'green')
+plt.title('Salary vs Experience (Training set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+plt.scatter(X_test, y_test, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'green')
+plt.title('Salary vs Experience (Test set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
         
   `;
   
-        var text6 = `
-        echo enter the number 
-read a
-if [ $a -lt 0 ]
-then 
-	echo $a is negative.
-elif [ $a -gt 0 ]
-then 
-	echo $a is positive.
-else 
-	echo $a is zero.
-fi 
-
+        var text6 = ` #4 : Perform logistic regression
+        import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+import matplotlib.pyplot as plt # Visualizing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+student_data = pd.read_csv("/content/Admission_P1A - Admission_P1A
+(1).csv")
+col_names = student_data.columns
+#Print first ten records
+student_data.head(10)
+feature_cols = ['gre', 'gpa', 'rank']
+X = student_data[feature_cols]
+Y=student_data.admit
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3,
+random_state=1)
+clf = LogisticRegression()
+clf.fit(X_train,Y_train)
+Y_pred = clf.predict(X_test)
+print("Accuracy:",round(accuracy_score(Y_test, Y_pred),1))
+# Prediction
+new={'gre':[260],'gpa':[2.67],'rank':[1] }
+sc2 = pd.DataFrame(new,columns= ['gre','gpa','rank'])
+Y_pred=clf.predict(sc2)
+print (sc2)
+print ("Forecast is:",Y_pred
 `;
 
-        var text7 = `
-        echo enter the day number 
-read num 
-case $num in 
-1)	echo sunday;;
-2)	echo monday;;
-3)	echo tuesday;;
-4)	echo wednesday;;
-5)	echo thursday;;
-6)	echo friday;;
-7)	echo saturday;;
-*)	echo enter the number between 1 to 7;;
-esac
+        var text7 = `#5 Perform data analysis
+
+        from pandas import read_csv
+from matplotlib import pyplot
+from statsmodels.tsa.ar_model import AutoReg
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+# load dataset
+series = read_csv('/content/daily-min-temperatures.csv', header=0,
+index_col=0,parse_dates=True)
+print(series.head(10))
+print("===================================================================
+=====")
+# split dataset
+X = series.values
+print(X)
+print("===================================================================
+=====")
+train, test = X[1:len(X)-7], X[len(X)-7:]
+# train autoregression
+model = AutoReg(train,10)
+model_fit = model.fit()
+print('Lag: %s' % model_fit.ar_lags)
+print('Coefficients: %s' % model_fit.params)
+# make predictions
+predictions = model_fit.predict(start=len(train),
+end=len(train)+len(test)-1, dynamic=False)
+for i in range(len(predictions)):
+print('predicted=%f, expected=%f' % (predictions[i], test[i]))
+rmse = sqrt(mean_squared_error(test, predictions))
+print('Test RMSE: %.3f' % rmse)
+# plot results
+pyplot.plot(test)
+pyplot.plot(predictions, color='red')
+pyplot.show()
 
 `;
-var text8 = `
-echo enter the word 
-read str 
-case $str in
-[aeiou]*) echo the word begine with vowels;;
-[0-9]*) echo the word begine with the digit;;
-*[0-9]) echo the word ends with digit;;
-????) echo the word enterd is 4 letter word;;
-*) echo the word enterd is either starts with a constraints or incorrect input;;
-esac
-        
-`;
-
-var text9 = `
-echo enter 
-echo 1 To see the contents of /etc/passwd
-echo 2 Too see the list of users
-echo 3 Too see the present working directory 
-echo 4 exit 
-echo enter your choice 
-read n 
-case $n in 
-1) cat /etc/passwd;;
-2) ls /home;;
-3) pwd;;
-4) exit;;
-*) echo Enter the choice as 1, 2, 3, or 4;;
-esac    
-`;
-
-
-        var text10 = `
-        i=1
-sum=0
-
-while [ $i -le 10 ]
-do
-	echo $i
-	sum=$(expr $sum + $i)
-	i=$(expr $i + 1)
-done
-
-echo"The sum is: $sum"
- `;
-
-        var text11 = `
-
-        i=1
-sum=0
-until [ $i -gt 10 ]
-do 
-	echo $i
-	sum=$( expr $sum + $i )
-	i=$( expr $i + 1 )
-done
-echo "The sum is: $sum"
-        `;
-
-        var text12 = `
-        sum=0
-for i in 1 2 3 4 5 6 7 8 9 10
-do
-	sum=$( expr $sum + $i )
-	echo $i
-done
-echo "The sum is: $sum"
- `;
-
-        var text13 = `
-        echo Enter the number :
-read n
-i=1
-sum=0
-while [ $i -le $n ]
-do 
-	echo $i
-	sum=$( expr $sum + $i )
-	i=$( expr $i + 1 )
-done 
-echo "summnation: $sum"
-
-`;
-
-        var text14 = `
-        echo "enter a number"
-read number
-for((i=1; i<=100; i++));
-do
-echo "$number x $i = $((number*i))"
-done
- `;
-
- var text15 = `
- echo "enter the radius of the circle:"
-read radius 
-area=$( echo "3.1415 * $radius * $radius"|bc)
-echo "area of the circle is :$area"
-
- `;
-
- var text16 = `
- echo "enter the radius of the cylinder :" 
-read radius 
-echo "enter the height of the cylinder :"
-read height
-volume=$(echo "3.1415 *$radius *$radius *$height"|bc) 
-echo "volume of the cylinder is: $volume" 
- `;
-
- var text17 = `
- echo "enter temperature in celcius :"
-read celcius
-fahrenheit=$(echo "scale=2; (9/5) * ($celcius+32)" |bc)
-echo "temperature in fahrenheit : $fahrenheit" 
-echo "enter temperature in fahrenheit:" 
-read fahrenheit 
-celcius=$(echo "scale=2; (9/5)*($fahrenheit-32)"|bc)
-echo "temperature in celcius :$celcius"
- `;
-
- var text18 = `
- echo "enter the amount in rupees:" 
-read rupees
-paisa=$(echo "$rupees * 100"|bc) 
-echo "equivalent in paisa :$paisa"
- `;
-
-
-
- var text20 = `
- echo "Enter a year:"
-read year
-if [ $((year % 4)) -eq 0 ] && [ $((year % 100)) -ne 0 ] || [ $((year % 400)) -eq 0 ]; then
-echo "$year is a leap year."
-else
-echo "$year is not a leap year."
-fi
-
- `;
-
- var text14 = `
- echo "Even numbers from 1 to 100:"
-for ((i = 2; i <= 100; i += 2)); do
-echo $i
-done
-echo "Odd numbers from 1 to 100:"
-for ((i = 1; i <= 100; i += 2)); do
-echo $i
-Done
-
- `;
 
 
 function copyText(text) {
