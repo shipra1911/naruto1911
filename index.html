@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,274 +39,932 @@
 
 <body>
 
-    <button onclick="copyText(text1)">1a using Naive Bayes algorithm</button>
-    <button onclick=" copyText(text2)">1b using the SVM classifier</button>
-    <button onclick="copyText(text3)">2a clustering technique KMeans </button>
-    <button onclick="copyText(text4)">2b  using hierarchical clustering</button>
-    <button onclick="copyText(text5)">3 Perform linear regression</button>
-    <button onclick="copyText(text6)">4 Perform logistic regression</button>
-    <button onclick="copyText(text7)">5 Perform data analysis</button>
+    <button onclick="copyText(text1)">Practical 2: Configure AAA Authentication on Cisco routers</button>
+    <button onclick=" copyText(text2)">3aaConfigure, Apply and Verify an Extended Numbered ACL</button>
+    <button onclick="copyText(text3)">3bConfigure, Apply and Verify an Extended Named ACL</button>
+    <button onclick="copyText(text4)">4a Configure IP ACLs to Mitigate Attacks</button>
+    <button onclick="copyText(text5)">4bConfigure, Apply, and Verify an IPv6 ACL
+                                     • Configure, Apply, and Verify a Second IPv6 ACL</button>
+    <button onclick="copyText(text6)">5: Configuring a Zone-Based Policy Firewall (ZPF)</button>
+    <button onclick="copyText(text7)">6Configure IOS Intrusion Prevention System (IPS) Using the CLI</button>
+    <button onclick="copyText(text8)">7Layer 2 Security</button>
     
     
     <p id="copiedMsg"></p>
     <script>
-        var text1 = `1a 
+        var text1= `
+        ◼ Configure Router:
+Step 1: Configure password for vty lines
+R1(config) # line vty 0 4
+R1(config-line) #password vtypa55
+R1(config-line) #login
 
-        import numpy as np
-import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+Step 2: Configure secret on router
+R1(config) # enable secret enpa55
 
-df = pd.read_csv('C:/Users/shett/Downloads/spam - spam.csv', encoding='latin-1')
+Step 3: Configure OSPF on routers
+R1(config) #router ospf 1
+R1(config-router) #network 192.168.1.0 0.0.0.255 area 0
 
-df = df[['Message', 'Category']]
-df.columns = ['SMS', 'Type']
+Step 4: Configure OSPF MD5 authentication for all router in area 0
+R1(config) #router ospf 1
+R1(config-router)# area 0 authentication message-digest
 
-countvec = CountVectorizer(ngram_range=(1, 4), stop_words='english', strip_accents='unicode', max_features=1000)
+Step 5: Configure MD5 key for all routers in area 0
+R1(config)# int gig0/0
+R1(config-if)# ip ospf message-digest-key 1 md5 pa55
 
-bow = countvec.fit_transform(df.SMS)
+Step 6: Verify configurations.
+a. Verify the MD5 authentication configurations using the commands show ip
+ospf interface.
+b. Verify end-to-end connectivity.
+Output should be shown in all the routers :
+R1# show ip ospf interface
+Message-digest Authentication Enabled
+Youngest key ID is 1
 
-X_train = bow.toarray()
-Y_train = df.Type.values
+Part 1: Configure Local AAA Authentication for Console Access
+on R1
+Step 1: Test Connectivity
+PC0 > ping 192.168.1.3
+Successful
+PC1 > ping 192.168.1.2
+Successful
 
-mnb = MultinomialNB()
+Step 2: Configure Local username on R1
+R1(config)# username admin secret adminpa55
 
-mnb.fit(X_train, Y_train)
+Step 3: Configure local AAA authentication for console access on R1.
+R1(config)# aaa new-model
+R1(config)# aaa authentication login default local
 
-text1 = countvec.transform(['free gifts for all'])
-print('free gifts for all')
-print(mnb.predict(text1))
-text2 = countvec.transform(['we will go for lunch'])
-print('we will go for lunch')
-print(mnb.predict(text2))
+Step 4: Configure the line console to use the defined AAA authentication
+method.
+R1(config)# line console 0
+R1(config-line)# login authentication default
 
-    `;
-        var text2 = `1b
+Step 5: Verify the AAA authentication method.
+R1(config-line)# end
+User Access Verification
+Username: admin
+Password: adminpa55
+R1>
 
-from sklearn import svm, datasets
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-iris = datasets.load_iris()
-X = iris.data[:, :2] # we only take the first two features
-y = iris.target
-x_train, x_test, y_train, y_test = train_test_split(X, y, random_state = 0, test_size = 0.3)
-clf = svm.SVC(kernel='linear', C=1).fit(x_train, y_train)
-classifier_predictions = clf.predict(x_test)
-print(accuracy_score(y_test, classifier_predictions)*100)
-h = 0.02
-x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-print(x_min)
-print(x_max)
-print(y_min)
-print(y_max)
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h),np.arange(y_min, y_max, h))
-print(xx.ravel())
-print("---------------------")
-print(yy.ravel())
-Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
-print(Z)
-plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.4)
-plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm)
-plt.xlabel('Sepal length')
-plt.ylabel('Sepal width')
-plt.xlim(xx.min(), xx.max())
-plt.ylim(yy.min(), yy.max())
-plt.title("Linear SVM")
-plt.show()
+Part 2: Configure Local AAA Authentication for vty Lines on R1
 
+Step 1: Configure domain name and crypto key for use with SSH.
+R1(config)# ip domain-name ccnasecurity.com
+R1(config)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
+
+Step 2: Configure a named list AAA authentication method for the vty lines
+on R1.
+R1(config)# aaa authentication login SSH-LOGIN local
+
+Step 3: Configure the vty lines to use the defined AAA authentication
+method.
+R1(config)# line vty 0 4
+R1(config-line)# login authentication SSH-LOGIN
+R1(config-line)# transport input ssh
+R1(config-line)# end
+
+Step 4: Verify the AAA authentication method.
+PC0> ssh –l Admin 192.168.1.1
+Password: adminpa55
+R1>
+PC1> ssh –l Admin 192.168.1.1
+Password: adminpa55
+R1>
 `;
 
-        var text3 = `2a
-        # importing libraries
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-# Importing the dataset
-dataset = pd.read_csv(r'C:\Users\shett\Downloads\Mall_Customers - Mall_Customers.csv')
-x = dataset.iloc[:, [3, 4]].values
-#finding optimal number of clusters using the elbow method
-#finding optimal number of clusters using the elbow method
-from sklearn.cluster import KMeans
-wcss_list= []  #Initializing the list for the values of WCSS
-#Using for loop for iterations from 1 to 10.
-for i in range(1, 11):
-    kmeans = KMeans(n_clusters=i, init='k-means++', random_state= 42)
-    kmeans.fit(x)
-    wcss_list.append(kmeans.inertia_)
-print("WCSS List:",wcss_list)
-plt.plot(range(1, 11), wcss_list)
-plt.title('The Elbow Method Graph')
-plt.xlabel('Number of clusters(k)')
-plt.ylabel('wcss_list')
-plt.show()
-#training the K-means model on a dataset
-kmeans = KMeans(n_clusters=5, init='k-means++', random_state= 42)
-y_predict= kmeans.fit_predict(x)
-print(y_predict)
-#visulaizing the clusters
-plt.scatter(x[y_predict == 0, 0], x[y_predict == 0, 1], s=100, c='blue', label='Cluster 1')  # for first cluster
-plt.scatter(x[y_predict == 1, 0], x[y_predict == 1, 1], s=100, c='green', label='Cluster 2')  # for second cluster
-plt.scatter(x[y_predict == 2, 0], x[y_predict == 2, 1], s=100, c='red', label='Cluster 3')  # for third cluster
-plt.scatter(x[y_predict == 3, 0], x[y_predict == 3, 1], s=100, c='cyan', label='Cluster 4')  # for fourth cluster
-plt.scatter(x[y_predict == 4, 0], x[y_predict == 4, 1], s=100, c='magenta', label='Cluster 5')  # for fifth cluster
-plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='yellow', label='Centroid')
-plt.title('Clusters of customers')
-plt.xlabel('Annual Income (k$)')
-plt.ylabel('Spending Score (1-100)')
-plt.legend()
-plt.show()
+        var text2 = ` 
+        ◼ Configure Router:
+Step 1: Configure password for vty lines
+R1(config) # line vty 0 4
+R1(config-line) #password vtypa55
+R1(config-line) #login
 
+Step 2: Configure secret on router
+R1(config) # enable secret enpa55
+
+Part 1: Configure, Apply and Verify an Extended Numbered
+ACL
+Step 1: Configure an ACL to permit FTP and ICMP. (Use Router 2911)
+R1(config)# access-list 100 permit tcp 172.22.34.64 0.0.0.31 host
+172.22.34.62 eq ftp
+R1(config)# access-list 100 permit icmp 172.22.34.64 0.0.0.31 host
+172.22.34.62
+
+Step 2: Apply the ACL on the correct interface to filter traffic.
+R1(config)# int gig 0/0
+R1(config-if)# ip access-group 100 in
+
+Step 3: Verify the ACL implementation.
+a. Ping from PC1 to Server.
+PC1> ping 172.22.34.62
+(Successful)
+
+b. FTP from PC1 to Server. The username and password are both cisco.
+PC1> ftp 172.22.34.62
+
+c. Exit the FTP service of the Server.
+ftp> quit
+
+d. Ping from PC1 to PC2.
+PC1> ping 172.22.34.98
+(Unsuccessful) destination host unreachable
+
+Part 2: Configure, Apply and Verify an Extended Named ACL
+Step 1: Configure an ACL to permit HTTP access and ICMP.
+R1(config)# ip access-list extended HTTP_ONLY
+R1(config-ext-nacl)# permit tcp 172.22.34.96 0.0.0.15 host 172.22.34.62 eq
+www
+R1(config-ext-nacl)# permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.62
+
+Step 2: Apply the ACL on the correct interface to filter traffic.
+R1(config)# int gig0/1
+R1(config-if)# ip access-group HTTP_ONLY in
+
+Step 3: Verify the ACL implementation.
+a. Ping from PC2 to Server.
+PC2> ping 172.22.34.62
+(Successful)
+
+b. FTP from PC2 to Server
+PC2> ftp 172.22.34.62
+(Unsuccessful)
+
+c. Open the web browser on PC2.
+URL -> http://172.22.34.62
+(Successful)
+
+d. Ping from PC2 to PC1.
+PC> ping 172.22.34.66
+(Unsuccessful)
 `;
 
-        var text4 = `2b
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-data = pd.read_csv(r'C:\Users\shett\Downloads\Wholesale customers data - Wholesale customers data.csv')
-print("Original Data:")
-print(data.head())
-from sklearn.preprocessing import normalize
-data_scaled = normalize(data)
-data_scaled = pd.DataFrame(data_scaled, columns=data.columns)
-print("\nNormalized Data:")
-print(data_scaled.head())
-import scipy.cluster.hierarchy as shc
-plt.figure(figsize=(10, 7))
-plt.title("Dendrograms")
-linkage_matrix = shc.linkage(data_scaled, method='ward')
-print("Linkage Matrix:", linkage_matrix)
-dendrogram = shc.dendrogram(linkage_matrix)
-plt.axhline(y=6, color='r', linestyle='--')
-plt.show()
-from sklearn.cluster import AgglomerativeClustering
-cluster = AgglomerativeClustering(n_clusters=2, linkage='ward')
-cluster_labels = cluster.fit_predict(data_scaled)
-print("Cluster Labels:", cluster_labels)
-plt.figure(figsize=(10, 7))
-plt.scatter(data_scaled.iloc[:, 3], data_scaled.iloc[:, 4], c=cluster_labels, cmap='viridis') # Use appropriate column indices for Milk and Grocery
-plt.title('Clusters using Agglomerative Hierarchical Clustering')
-plt.xlabel('Milk')
-plt.ylabel('Frozen')
-plt.show()
+        var text3 = `
 
+        ◼ Configure Switch and Router:
+Step 1: Configure the IP address on switch
+SWA(config)# int vlan 1
+SWA(config-if)# ip address 10.101.117.50 255.255.255.248
+SWA(config-if)# no shut
+SWA(config-if)# ip default-gateway 10.101.117.49
+
+SWB(config)# int vlan 1
+SWB(config-if)# ip address 10.101.117.34 255.255.255.240
+SWB(config-if)# no shut
+SWB(config-if)# ip default-gateway 10.101.117.33
+
+SWC(config)# int vlan 1
+SWC(config-if)# ip address 10.101.117.2 255.255.255.224
+SWC(config-if)# no shut
+SWC(config-if)# ip default-gateway 10.101.117.1
+
+Step 2: Configure the secret on router and switch
+RTA/SW(config)# enable secret enpa55
+
+Step 3: Configure the console password on router and switch
+RTA/SW(config)# line console 0
+RTA/SW(config)# password tyit
+RTA/SW(config)# login
+
+Step 4: Test connectivity
+Ping from PCA to PC-B.
+PCA>ping 10.101.117.35
+(Successful)
+Ping from PCA to SWC.
+PCA>ping 10.101.117.2
+(Successful)
+Ping from PCB to SWC.
+PCB>ping 10.101.117.2
+(Successful)
+
+Part 1: Configure Switch and Router to support SSH Connection
+Step 1: Configure domain name and crypto key for use with SSH.
+RTA/SW(config)# ip domain-name ccnasecurity.com
+
+Step 2: Configure users to login to SSH
+RTA/SW(config)# username admin secret adminpa55
+
+Step 3: Configure incoming vty lines
+RTA/SW(config)# line vty 0 4
+RTA/SW(config-line)# login local
+RTA/SW(config)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
+Step 4: Verify the SSH Connection
+PCA> ssh -l Admin 10.101.117.34
+Password: adminpa55
+
+SWB>
+PCA> ssh -l Admin 10.101.117.2
+Password: adminpa55
+SWC>
+PCB> ssh -l Admin 10.101.117.50
+Password: adminpa55
+SWA>
+PCB> ssh -l Admin 10.101.117.2
+Password: adminpa55
+SWC>
+SWC> ssh -l Admin 10.101.117.50
+Password: adminpa55
+SWA>
+SWC> ssh -l Admin 10.101.117.34
+Password: adminpa55
+SWB>
+SWB> exit
+
+Part 2: Configure, Apply and Verify an Extended Numbered
+ACL
+Step 1: Configure the extended ACL.
+RTA(config)# access-list 199 permit tcp 10.101.117.32 0.0.0.15 10.101.117.0
+0.0.0.31 eq 22
+RTA(config)# access-list 199 permit icmp any any
+
+Step 2: Apply the extended ACL.
+RTA(config)# int gig0/2
+RTA(config-if)# ip access-group 199 out
+
+Step 3: Verify the extended ACL implementation.
+a. Ping from PCB to all of the other IP addresses in the network.
+PCB> ping 10.101.117.51
+(Successful)
+PCB> ping 10.101.117.2
+(Successful)
+
+b. SSH from PCB to SWC.
+PCB> ssh -l Admin 10.101.117.2
+Password:adminpa55
+SWC>
+
+c. Exit the SSH session to SWC.
+SWC>exit
+
+d. Ping from PCA to all of the other IP addresses in the network.
+PCA> ping 10.101.117.35
+(Successful)
+PCA> ping 10.101.117.2
+(Successful)
+
+e. SSH from PCA to SWC
+PCA> ssh -l Admin 10.101.117.2
+
+Connection timed out. Remote host not responding
+
+f. SSH from PCA to SWB.
+PCA> ssh -l Admin 10.101.117.34
+Password: adminpa55
+SWB>
+
+g. After logging into SWB, do not log out. SSH to SWC in privileged EXEC
+mode.
+SWB# ssh -l Admin 10.101.117.2
+Password: adminpa55
+SWC>
+`;
+
+        var text4 = `
         
 
-`;
+        ◼ Configure Router:
+Step 1: Configure secret on router
+R(config) # enable secret enpa55
 
-        var text5 = `3
-        import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-# Load the dataset
-dataset = pd.read_csv(r'C:\Users\shett\Downloads\salary_data - salary_data.csv')
-# Extract features (X) and target variable (y)
-X = dataset.iloc[:, :-1].values
-y = dataset.iloc[:, -1].values
-print(dataset.head())
-# Split the dataset into training and testing sets
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-# Train the linear regression model
-from sklearn.linear_model import LinearRegression
-regressor = LinearRegression()
-regressor.fit(X_train, y_train)
-# Predictions on the test set
-y_pred = regressor.predict(X_test)
-print(pd.DataFrame(data={'Actuals':y_test,'Predictions':y_pred}))
-# Plotting training set results
-plt.scatter(X_train, y_train, color='red')
-plt.plot(X_train, regressor.predict(X_train), color='blue')
-plt.title('Salary vs Experience (Training set)')
-plt.xlabel('Years of Experience')
-plt.ylabel('Salary')
-plt.show()
-# Plotting test set results
-plt.scatter(X_test, y_test, color='red')
-plt.plot(X_test, y_pred, color='blue')  # Use y_pred instead of regressor.predict(X_train)
-plt.title('Salary vs Experience (Test set)')
-plt.xlabel('Years of Experience')
-plt.ylabel('Salary')
-plt.show()
+Step 2: Configure console password on router
+R(config) # line console 0
+R(config-line) #password conpa55
+R(config-line) #login
 
+Step 3: Configure SSH login on router
+Execute command on all routers
+R(config)# ip domain-name ccnasecurity.com
+R(config)# username admin secret adminpa55
+R(config)# line vty 0 4
+R(config-line)# login local
+R(config-line)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
 
+Step 4: Configure loop back address on Router 2
+R2(config)#int loopback 0
+R2(config-if)#ip address 192.168.2.1 255.255.255.0
+R2(config-if)# no shut
 
-        
+Step 5: Configure static routing on routers
+Execute command on all routers
+R1(config)#ip route 192.168.3.0 255.255.255.0 10.1.1.2
+
+R1(config)#ip route 10.2.2.0 255.255.255.252 10.1.1.2
+R1(config)#ip route 192.168.2.0 255.255.255.0 10.1.1.2
+
+R2(config)#ip route 192.168.1.0 255.255.255.0 10.1.1.1
+R2(config)#ip route 192.168.3.0 255.255.255.0 10.2.2.1
+
+R3(config)#ip route 192.168.1.0 255.255.255.0 10.2.2.2
+R3(config)#ip route 192.168.2.0 255.255.255.0 10.2.2.2
+R3(config)#ip route 10.1.1.0 255.255.255.0 10.2.2.2
+
+Part 2: Verify Basic Network Connectivity
+Step 1: From PC-A, verify connectivity to PC-C and R2.
+PCA> ping 192.168.3.3
+(Successful)
+PCA> ping 192.168.2.1
+(Successful)
+PCA> ssh –l admin 192.168.2.1
+Password: adminpa55
+R2>exit
+
+Step 2: From PC-C, verify connectivity to PC-A and R2.
+PCC> ping 192.168.1.3
+(Successful)
+PCC> ping 192.168.2.1
+(Successful)
+PCC> ssh –l admin 192.168.2.1
+
+Password: adminpa55
+R2>exit
+Open a web browser to the PC-A server (192.168.1.3) to display the web page.
+Close the browser when done.
+Desktop->Web Browser->192.168.1.3
+(Successful)
+
+Part 3: Secure Access to Routers
+Step 1: Configure ACL 10 to block all remote access to the routers except
+from PC-C
+Execute command on all routers
+R(config)# access-list 10 permit host 192.168.3.3
+
+Step 2: Apply ACL 10 to ingress traffic on the VTY lines.
+Execute command on all routers
+R(config)# line vty 0 4
+R(config-line)# access-class 10 in
+
+Step 3: Verify exclusive access from management station PC-C.
+PCC> ssh –l admin 192.168.2.1
+Password: adminpa55
+R2>exit
+
+Step 4: Verify denial from PC-A.
+PCA> ssh –l admin 192.168.2.1
+Connection refused by remote host
+
+Part 4: Create a Numbered IP ACL 120 on R1
+Step 1: Verify that PC-C can access the PC-A via HTTPS using the web
+browser.
+Be sure to disable HTTP and enable HTTPS on server PC-A in Services tab.
+
+Step 2: Configure ACL 120 to specifically permit and deny the specified
+traffic.
+R1(config)# access-list 120 permit udp any host 192.168.1.3 eq domain
+R1(config)# access-list 120 permit tcp any host 192.168.1.3 eq smtp
+R1(config)# access-list 120 permit tcp any host 192.168.1.3 eq ftp
+R1(config)# access-list 120 deny tcp any host 192.168.1.3 eq 443
+R1(config)# access-list 120 permit tcp host 192.168.3.3 host 10.1.1.1 eq 22
+
+Step 3: Apply the ACL to interface
+R1(config)# int se0/1/0
+R1(config-if)# ip access-group 120 in
+
+Step 4: Verify that PC-C cannot access PC-A via HTTPS using the web
+browser.
+Desktop->Web Browser->192.168.1.3
+(Unsuccessful) Request timed out
+
+Part 5: Modify an Existing ACL on R1
+Step 1: Verify that PC-A cannot successfully ping the loopback interface on
+R2.
+PCA> ping 192.168.2.1
+(Unsuccessful) Request timed out
+
+Step 2: Make any necessary changes to ACL 120 to permit and deny the
+specified traffic.
+R1(config)# access-list 120 permit icmp any any echo-reply
+R1(config)# access-list 120 permit icmp any any unreachable
+R1(config)# access-list 120 deny icmp any any
+R1(config)# access-list 120 permit ip any any
+
+Step 3: Verify that PC-A can successfully ping the loopback interface on
+R2.
+PCA> ping 192.168.2.1 (Successful)
+
+Part 6: Create a Numbered IP ACL 110 on R3
+Step 1: Configure ACL 110 to permit only traffic from the inside network.
+R3(config)# access-list 110 permit ip 192.168.3.0 0.0.0.255 any
+
+Step 2: Apply the ACL to interface
+R3(config)# int gig0/1
+R3(config-if)# ip access-group 110 in
+
+Part 7: Create a Numbered IP ACL 100 on R3
+Step 1: Configure ACL 100 to block all specified traffic from the outside
+network.
+R3(config)# access-list 100 permit tcp 10.0.0.0 0.255.255.255 host 192.168.3.3
+eq 22
+R3(config)# access-list 100 deny ip 10.0.0.0 0.255.255.255 any
+R3(config)# access-list 100 deny ip 172.16.0.0 0.15.255.255 any
+R3(config)# access-list 100 deny ip 192.168.0.0 0.0.255.255 any
+R3(config)# access-list 100 deny ip 127.0.0.0 0.255.255.255 any
+R3(config)# access-list 100 deny ip 224.0.0.0 15.255.255.255 any
+R3(config)# access-list 100 permit ip any any
+
+Step 2: Apply the ACL to interface
+R3(config)# interface se0/1/0
+R3(config-if)# ip access-group 100 in
+
+Step 3: Confirm that the specified traffic entering interface Serial is
+handled correctly.
+PCC> ping 192.168.1.3
+(Unsuccessful)
+PCC> ssh –l admin 192.168.2.1
+Password: adminpa55
+R2>exit
   `;
   
-        var text6 = `4
-         import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-# Load the dataset
-student_data = pd.read_csv(r"C:\Users\shett\Downloads\Admission_P1A - Admission_P1A.csv")
-# Print first ten records
-print(student_data.head(10))
-# Split dataset into features and target variable
-feature_cols = ['gre', 'gpa', 'rank']
-X = student_data[feature_cols]
-Y = student_data.admit
-# 70% training and 30% test
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
-# Model building
-clf = LogisticRegression()
-# Fit the model with data
-clf.fit(X_train, Y_train)
-# Predict the response for test dataset
-Y_pred = clf.predict(X_test)
-# Accuracy calculation and display
-print("Accuracy:", round(accuracy_score(Y_test, Y_pred),1))
-# Prediction for new data
-new = {'gre': [260], 'gpa': [2.67], 'rank': [1]}
-sc2 = pd.DataFrame(new,columns=['gre','gpa','rank'])
-# Predict admission for new data
-Y_pred = clf.predict(sc2)
-print(sc2)
-print("Forecast is:", Y_pred)
+        var text5 = `
+
+        ◼ Configure Router:
+Step 1: Configure secret on router
+Execute command on all routers
+R(config)# enable secret enpa55
+
+Step 2: Assign static ipv6 address
+R1(config)# int gig0/0
+R1(config-if)# ipv6 address 2001:DB8:1:10::1/64
+R1(config-if)# ipv6 address FE80::1 link-local
+R1(config-if)# no shut
+
+R1(config)# int gig0/1
+R1(config-if)# ipv6 address 2001:DB8:1:11::1/64
+R1(config-if)# ipv6 address FE80::1 link-local
+R1(config-if)# no shut
+
+R1(config)# int se0/1/0
+R1(config-if)# ipv6 address 2001:DB8:1:1::1/64
+R1(config-if)# ipv6 address FE80::1 link-local
+R1(config-if)# no shut
+
+R2(config)# int se0/1/0
+R2(config-if)# ipv6 address 2001:DB8:1:1::2/64
+R2(config-if)# ipv6 address FE80::2 link-local
+R2(config-if)# no shut
+
+R2(config)# int se0/1/1
+
+R2(config-if)# ipv6 address 2001:DB8:1:2::2/64
+R2(config-if)# ipv6 address FE80::2 link-local
+R2(config-if)# no shut
+
+R3(config)# int gig0/0
+R3(config-if)# ipv6 address 2001:DB8:1:30::1/64
+R3(config-if)# ipv6 address FE80::3 link-local
+R3(config-if)# no shut
+
+R3(config)# int se0/1/0
+R3(config-if)# ipv6 address 2001:DB8:1:2::1/64
+R3(config-if)# ipv6 address FE80::3 link-local
+R3(config-if)# no shut
+
+Step 3: Enable IPv6 routing
+R1(config)# ipv6 unicast-routing
+R1(config)# ipv6 route 2001:DB8:1:2::0/64 2001:DB8:1:1::2
+R1(config)# ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:1::2
+
+R2(config)# ipv6 unicast-routing
+R2(config)# ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:1::1
+R2(config)# ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:1::1
+R2(config)# ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:2::1
+
+R3(config)# ipv6 unicast-routing
+R3(config)# ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:2::2
+R3(config)# ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:2::2
+R3(config)# ipv6 route 2001:DB8:1:1::0/64 2001:DB8:1:2::2
+
+Step 4: Verify connectivity
+PC1> ping 2001:DB8:1:30::30
+(Successful)
+PC2> ping 2001:DB8:1:30::30
+(Successful)
+
+Part 2: Configure, Apply, and Verify an IPv6 ACL
+Step 1: Configure an ACL that will block HTTP and HTTPS access.
+R1(config)# ipv6 access-list BLOCK_HTTP
+R1(config-ipv6-acl)# deny tcp any host 2001:DB8:1:30::30 eq www
+R1(config-ipv6-acl)# deny tcp any host 2001:DB8:1:30::30 eq 443
+R1(config-ipv6-acl)# permit ipv6 any any
+R1(config-ipv6-acl)# exit
+
+Step 2: Apply the ACL to the correct interface.
+R1(config)# int gig0/1
+R1(config-if)# ipv6 traffic-filter BLOCK_HTTP in
+
+Step 3: Verify the ACL implementation
+Open a web browser to the PC1 to display the web page.
+Desktop->Web Browser->http://2001:DB8:1:30::30
+(Successful)
+Desktop->Web Browser->https://2001:DB8:1:30::30
+(Successful)
+
+Open a web browser to the PC2 to display the web page.
+Desktop->Web Browser->http://2001:DB8:1:30::30
+(Unsuccessful) – Request Timeout
+Desktop->Web Browser->https://2001:DB8:1:30::30
+(Unsuccessful) – Request Timeout
+PC2> ping 2001:DB8:1:30::30
+(Successful)
+
+Part 3: Configure, Apply, and Verify a Second IPv6 ACL
+Step 1: Create an access list to block ICMP.
+R3(config)# ipv6 access-list BLOCK_ICMP
+R3(config-ipv6-acl)# deny icmp any any
+R3(config-ipv6-acl)# permit ipv6 any any
+R3(config-ipv6-acl)# exit
+
+Step 2: Apply the ACL to the correct interface.
+R3(config)# int gig0/0
+R3(config-if)# ipv6 traffic-filter BLOCK_ICMP out
+
+Step 3: Verify that the proper access list functions.
+PC2> ping 2001:DB8:1:30::30
+(Unsuccessful) - Destination host unreachable
+PC1> ping 2001:DB8:1:30::30
+(Unsuccessful) - Destination host unreachable
+
+Open a web browser to the PC1 to display the web page.
+Desktop->Web Browser->http://2001:DB8:1:30::30
+(Successful)
+Desktop->Web Browser->https://2001:DB8:1:30::30
+(Successful)
+`;
+
+        var text6 = `
+        
+         Configure Router:
+Step 1: Configure console password on router
+Execute command on all routers
+R(config) # line console 0
+R(config-line) #password conpa55
+R(config-line) #login
+
+Step 2: Configure password for vty lines
+Execute command on all routers
+R(config)# line vty 0 4
+R(config-line)# password vtypa55
+R(config-line)# login
+
+Step 3: Configure secret on router
+R(config) # enable secret enpa55
+
+Step 4: Configure SSH login on router
+Execute command on all routers
+R(config)# ip domain-name ccnasecurity.com
+R(config)# username admin secret adminpa55
+R(config)# line vty 0 4
+R(config-line)# login local
+R(config-line)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
+Step 5: Configure static routing on routers
+Execute command on all routers
+
+R(config)#ip route destination-network-address subnetmask next-hop-
+destination-address
+
+Part 2: Verify Basic Network Connectivity
+Step 1: Check connectivity from PCA to PCC
+PCA>ping 192.168.3.3
+(Successful)
+Step 2: Access R2 using SSH.
+PCC>ssh –l admin 10.2.2.2
+Password:adminpa55
+R2>exit
+Step 3: From PC-C, open a web browser to the PC-A server.
+Desktop -> Web Browser
+URL: http://192.168.1.3
+(Successful)
+
+Part 3: Create the Firewall Zones on R3
+Step 1: Verify that the Security Technology package
+R3# show version
+
+Step 2: Enable the Security Technology package
+R3(config)# license boot module c1900 technology-package securityk9
+
+Step 3: Save the running-config and reload the router
+R3#copy run start
+R3# reload
+
+Step 4: Verify that the Security Technology package
+R3# show version
+
+Step 5: Create an internal zone.
+R3(config)# zone security IN-ZONE
+R3(config-sec-zone)# exit
+
+Step 6: Create an external zone.
+R3(config)# zone security OUT-ZONE
+R3(config-sec-zone)# exit
+
+Part 4: Identify Traffic Using a Class-Map
+Step 1: Create an ACL that defines internal traffic.
+R3(config)# access-list 101 permit ip 192.168.3.0 0.0.0.255 any
+
+Step 2: Create a class map referencing the internal traffic ACL
+R3(config)# class-map type inspect match-all IN-NET-CLASS-MAP
+R3(config-cmap)# match access-group 101
+R3(config-cmap)# exit
+
+Part 5: Specify Firewall Policies
+Step 1: Create a policy map to determine what to do with matched traffic.
+R3(config)# policy-map type inspect IN-2-OUT-PMAP
+
+Step 2: Specify a class type of inspect and reference class map IN-NET-
+CLASS-MAP.
+
+R3(config-pmap)# class type inspect IN-NET-CLASS-MAP
+
+Step 3: Specify the action of inspect for this policy map.
+R3(config-pmap-c)# inspect
+R3(config-pmap-c)# exit
+R3(config-pmap)# exit
+
+Part 6: Apply Firewall Policies
+Step 1: Create a pair of zones.
+R3(config)# zone-pair security IN-2-OUT-ZPAIR source IN-ZONE destination
+OUTZONE
+
+Step 2: Specify the policy map for handling the traffic between the two
+zones.
+R3(config-sec-zone-pair)# service-policy type inspect IN-2-OUT-PMAP
+R3(config-sec-zone-pair)# exit
+R3(config)#
+
+Step 3: Assign interfaces to the appropriate security zones.
+R3(config)# int g0/0
+R3(config-if)# zone-member security IN-ZONE
+R3(config-if)# exit
+R3(config)# int s0/1/0
+R3(config-if)# zone-member security OUT-ZONE
+R3(config-if)# exit
+
+Step 4: Copy the running configuration to the startup configuration.
+R3# copy run start
+R3# reload
+
+Part 7: Test Firewall Functionality from IN-ZONE to OUT
+ZONE
+Step 1: From internal PC-C, ping the external PC-A server.
+PCC>ping 192.168.1.3
+(Successful)
+
+Step 2: Access R2 using SSH.
+PCC>ssh –l admin 10.2.2.2
+Password:
+R2>
+
+Step 3: View established sessions
+R3# show policy-map type inspect zone-pair sessions
+Session 175216232 (192.168.3.3:1028)=>(10.2.2.2:22) tcp
+SIS_OPEN/TCP_ESTAB
+
+Step 4: From PC-C, exit the SSH session on R2 and close the command
+prompt window.
+R2>exit
+
+Step 5: From internal PC-C, open a web browser to the PC-A server web
+page.
+Desktop -> Web Browser
+URL: http://192.168.1.3
+(Successful)
+
+Step 6: View established sessions
+R3# show policy-map type inspect zone-pair sessions
+
+Session 565266624 (192.168.3.3:1031)=>(192.168.1.3:80) tcp
+SIS_OPEN/TCP_ESTAB
+
+Part 8: Test Firewall Functionality from OUT-ZONE to IN-
+ZONE
+
+Step 1: From internal PC-A, ping the external PC-C server.
+PCA>ping 192.168.3.3
+(Unsuccessful – Request timed out)
+
+Step 2: From R2, ping PC-C.
+R2# ping 192.168.3.3
+(Unsuccessful – Request timed out)
+
+
 
 `;
 
-        var text7 = `5
-# create and evaluate a static autoregressive model
-from pandas import read_csv
-from matplotlib import pyplot
-from statsmodels.tsa.ar_model import AutoReg
-from sklearn.metrics import mean_squared_error
-from math import sqrt
-# load dataset
-series = read_csv(r'C:\Users\shett\Downloads\daily-min-temperatures.csv', header=0, index_col=0,parse_dates=True)
-print(series.head(10))
-print("========================================================================")
-# split dataset
-X = series.values
-print(X)
-print("========================================================================")
-train, test = X[1:len(X)-7], X[len(X)-7:]
-# train autoregression
-model = AutoReg(train,10)
-model_fit = model.fit()
-print('Lag: %s' % model_fit.ar_lags)
-print('Coefficients: %s' % model_fit.params)
-# make predictions
-predictions = model_fit.predict(start=len(train), end=len(train)+len(test)-1, dynamic=False)
-for i in range(len(predictions)):
-  print('predicted=%f, expected=%f' % (predictions[i], test[i]))
-rmse = sqrt(mean_squared_error(test, predictions))
-print('Test RMSE: %.3f' % rmse)
-# plot results
-pyplot.plot(test, label='Actual')
-pyplot.plot(predictions, color='red',label='Predicted')
-pyplot.legend()
-pyplot.show()
+var text7= `Enable IOS IPS.
+• Configure logging.• Modify an IPS signature.• Verify IPS
+      
+        Part 1: Configure router
+Step 1: Configure secret on router
+Execute command on all routers
+R(config)# enable secret enpa55
+
+Step 2: Configure console password on router
+Execute command on all routers
+R(config)# line console 0
+R(config-line)# password conpa55
+R(config-line)# login
+
+Step 3: Configure SSH login on router
+Execute command on all routers
+R(config)# ip domain-name ccnasecurity.com
+R(config)# username admin secret adminpa55
+R(config)# line vty 0 4
+R(config-line)# login local
+R(config)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
+
+Step 4: Configure OSPF on routers
+Execute command on router 1
+R1(config)#router ospf 1
+R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
+R1(config-router)# network 10.1.1.0 0.0.0.3 area 0
+
+Execute command on router 2
+R2(config)#router ospf 1
+R2(config-router)# network 10.1.1.0 0.0.0.3 area 0
+R2(config-router)# network 10.2.2.0 0.0.0.3 area 0
+
+Execute command on router 3
+R3(config)#router ospf 1
+R3(config-router)# network 10.2.2.0 0.0.0.3 area 0
+R3(config-router)# network 192.168.3.0 0.0.0.255 area 0
+Part 2: Enable IOS IPS
+Step 1: Enable the Security Technology package
+R1# show version
+Part 2: Enable IOS IPS
+Step 1: Enable the Security Technology package
+R1# show version
+
+(When command “show version” is given the above result comes, remember for further
+practical’s)
+R1(config)# license boot module c1900 technology-package securityk9
+(Type yes)
+R1# copy run start
+R1# reload
+R1# show version
+
+(When command “show version” is given again the above result comes to check If security
+is enabled or not, remember for further practical’s)
+
+Step 2: Verify network connectivity
+PCA> ping 192.168.3.2
+(Successful)
+PCC> ping 192.168.1.2
+(Successful)
+
+Step 3: Create an IOS IPS configuration directory in flash.
+R1# mkdir ipsdir
+Create directory filename [ipsdir]? <Enter>
+
+Step 4: Configure the IPS signature storage location.
+R1(config)# ip ips config location flash:ipsdir
+
+Step 5: Create an IPS rule
+R1(config)# ip ips name iosips
+
+Step 6: Enable logging.
+R1(config)# ip ips notify log
+R1# clock set hr:min:sec date month year
+R1(config)# service timestamps log datetime msec
+R1(config)# logging host 192.168.1.50
+
+Step 7: Configure IOS IPS to use the signature categories.
+R1(config)# ip ips signature-category
+R1(config-ips-category)# category all
+R1(config-ips-category-action)# retired true
+
+R1(config-ips-category-action)# exit
+R1(config-ips-category)# category ios_ips basic
+R1(config-ips-category-action)# retired false
+R1(config-ips-category-action)# exit
+R1(config-ips-cateogry)# exit
+Do you want to accept these changes? [confirm] <Enter>
+
+Step 8: Apply the IPS rule to an interface.
+R1(config)# int gig0/0
+R1(config-if)# ip ips iosips out
+
+Step 9: Use show commands to verify IPS.
+R1# show ip ips all
+(Output)
+
+Step 10: View the syslog messages.
+Click the Syslog server->Services tab-> SYSLOG
+(Output)
+
+Part 3: Modify the Signature
+Step 1: Change the event-action of a signature.
+R1(config)# ip ips signature-definition
+R1(config-sigdef)# signature 2004 0
+R1(config-sigdef-sig)# status
+R1(config-sigdef-sig-status)# retired false
+R1(config-sigdef-sig-status)# enabled true
+R1(config-sigdef-sig-status)# exit
+R1(config-sigdef-sig)# engine
+
+R1(config-sigdef-sig-engine)# event-action produce-alert
+R1(config-sigdef-sig-engine)# event-action deny-packet-inline
+R1(config-sigdef-sig-engine)# exit
+R1(config-sigdef-sig)# exit
+R1(config-sigdef)# exit
+Do you want to accept these changes? [confirm] <Enter>
+
+Step 2: Use show commands to verify IPS.
+R1# show ip ips all
+(Output)
+
+Step 3: Verify that IPS is working properly.
+PCC> ping 192.168.1.2(Unsuccessful – Request timed out)
+PCA> ping 192.168.3.2(Successful)
+
+Step 4: View the syslog messages.
+Click the Syslog server->Services tab-> SYSLOG
+
+
+
 
 `;
 
+var text8 = `Assign the Central switch as the root bridge.
+• Secure spanning-tree parameters to prevent STP manipulation attacks.
+• Enable port security to prevent CAM table overflow attacks.
+
+        Part 1: Configure Switch / Router
+Step 1: Configure secret
+Execute command on all switches and router
+R1/SW(config) # enable secret enpa55
+
+Step 2: Configure console password
+Execute command on all switches and router
+R1/SW(config)# line console 0
+R1/SW(config-line)# password conpa55
+R1/SW(config-line)# login
+
+Step 3: Configure SSH login
+Execute command on all switches and router
+R1/SW(config)# ip domain-name ccnasecurity.com
+R1/SW(config)# username admin secret adminpa55
+R1/SW(config)# line vty 0 4
+R1/SW(config-line)# login local
+R1/SW(config-line)# crypto key generate rsa
+How many bits in the modulus [512]: 1024
+
+Part 2: Configure Root Bridge
+Step 1: Determine the current root bridge.
+Central# show spanning-tree
+SW1# show spanning-tree
+
+Step 2: Assign Central as the primary root bridge.
+Central(config)# spanning-tree vlan 1 root primary
+Central# show spanning-tree
+
+Step 3: Assign SW-1 as a secondary root bridge.
+SW1(config)# spanning-tree vlan 1 root secondary
+SW1# show spanning-tree
+
+Part 3: Protect Against STP Attacks
+Step 1: Enable PortFast on all access ports.
+SWA/B(config)# int range fa0/1 - 4
+SWA/B(config-if-range)# spanning-tree portfast
+
+Step 2: Enable BPDU guard on all access ports.
+SWA/B(config)# int range fa0/1 - 4
+SWA/B(config-if-range)# spanning-tree bpduguard enable
+
+Step 3: Enable root guard.
+SW-1/2(config)# int range fa0/23 - 24
+SW-1/2(config-if-range)# spanning-tree guard root
+
+Part 4: Configure Port Security and Disable Unused Ports
+Step 1: Configure basic port security on all ports connected to host devices.
+SW-A/B(config)# int range fa0/1 - 22
+SW-A/B(config-if-range)# switchport mode access
+SW-A/B(config-if-range)# switchport port-security
+SW-A/B(config-if-range)# switchport port-security maximum 2
+SW-A/B(config-if-range)# switchport port-security violation shutdown
+SW-A/B(config-if-range)# switchport port-security mac-address sticky
+
+Step 2: Verify port security.
+SW-A/B# show port-security int fa0/1
+
+Step 3: Disable unused ports.
+SW-A/B(config)# int range fa0/5 - 22
+SW-A/B(config-if-range)# shutdown
+
+Step 4: Verify Connectivity
+Ping C1->C2 (Successful)
+Ping C1->D1 (Successful)
+
+Step 5: Verify port security.
+SW-A/B# show port-security int fa0/1
+
+`;
 
 function copyText(text) {
     navigator.clipboard.writeText(text).then(function () {
