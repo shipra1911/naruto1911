@@ -1,4 +1,7 @@
 
+
+765_Moin Dhuni <dhunimoinuddin@gmail.com>	Mon, Mar 18, 2024 at 11:30 AM
+To: Shipra Jana <shipra190702@gmail.com>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,932 +41,1368 @@
 
 <body>
 
-    <button onclick="copyText(text1)">Practical 2: Configure AAA Authentication on Cisco routers</button>
-    <button onclick=" copyText(text2)">3aaConfigure, Apply and Verify an Extended Numbered ACL</button>
-    <button onclick="copyText(text3)">3bConfigure, Apply and Verify an Extended Named ACL</button>
-    <button onclick="copyText(text4)">4a Configure IP ACLs to Mitigate Attacks</button>
-    <button onclick="copyText(text5)">4bConfigure, Apply, and Verify an IPv6 ACL
-                                     • Configure, Apply, and Verify a Second IPv6 ACL</button>
-    <button onclick="copyText(text6)">5: Configuring a Zone-Based Policy Firewall (ZPF)</button>
-    <button onclick="copyText(text7)">6Configure IOS Intrusion Prevention System (IPS) Using the CLI</button>
-    <button onclick="copyText(text8)">7Layer 2 Security</button>
-    
-    
+    <button onclick="copyText(text1)">3aActivity Life cycle</button>
+    <button onclick=" copyText(text2)">3b Life Cycle of Fragments and Multiple Fragments</button>
+    <button onclick="copyText(text3)">4a linear layout</button>
+    <button onclick="copyText(text4)">4b relative layout</button>
+    <button onclick="copyText(text5)">4c table </button>
+    <button onclick="copyText(text6)">4d grid view</button>
+    <button onclick="copyText(text7)">5 AppBar and menu resources</button>
+    <button onclick="copyText(text8)">6,b Alert Dialog Box/ CustomDialogFragment</button>
+    <button onclick="copyText(text9)"> 7-The Android Intent Class,Using Events and Event Listeners. </button>
+    <button onclick="copyText(text10)">8a Notification Receiver</button>
+    <button onclick="copyText(text11)">8b broadcast Receiver</button>
+
     <p id="copiedMsg"></p>
     <script>
         var text1= `
-        ◼ Configure Router:
-Step 1: Configure password for vty lines
-R1(config) # line vty 0 4
-R1(config-line) #password vtypa55
-R1(config-line) #login
+        ACTIVITY_MAIN.XML
 
-Step 2: Configure secret on router
-R1(config) # enable secret enpa55
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-Step 3: Configure OSPF on routers
-R1(config) #router ospf 1
-R1(config-router) #network 192.168.1.0 0.0.0.255 area 0
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="766_Amit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Step 4: Configure OSPF MD5 authentication for all router in area 0
-R1(config) #router ospf 1
-R1(config-router)# area 0 authentication message-digest
+MAINACTIVITY.JAVA
 
-Step 5: Configure MD5 key for all routers in area 0
-R1(config)# int gig0/0
-R1(config-if)# ip ospf message-digest-key 1 md5 pa55
+package com.example.practical3;
 
-Step 6: Verify configurations.
-a. Verify the MD5 authentication configurations using the commands show ip
-ospf interface.
-b. Verify end-to-end connectivity.
-Output should be shown in all the routers :
-R1# show ip ospf interface
-Message-digest Authentication Enabled
-Youngest key ID is 1
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
+import android.os.Bundle;
+import android.util.Log;
 
-Part 1: Configure Local AAA Authentication for Console Access
-on R1
-Step 1: Test Connectivity
-PC0 > ping 192.168.1.3
-Successful
-PC1 > ping 192.168.1.2
-Successful
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d("Calling onCreate()","1) OnCreate() Excuted...");
+        Toast.makeText(getApplicationContext(),"1) onCreate() Excuted..",Toast.LENGTH_LONG).show();
+    }
 
-Step 2: Configure Local username on R1
-R1(config)# username admin secret adminpa55
+    @Override
+        protected void onStart() {
+        super.onStart();
+        Log.d("Calling onStart()","1) OnStart() Excuted...");
+        Toast.makeText(getApplicationContext(),"1) OnStart() Excuted...",Toast.LENGTH_LONG).show();
+    }
 
-Step 3: Configure local AAA authentication for console access on R1.
-R1(config)# aaa new-model
-R1(config)# aaa authentication login default local
 
-Step 4: Configure the line console to use the defined AAA authentication
-method.
-R1(config)# line console 0
-R1(config-line)# login authentication default
+        protected void OnResume() {
+        super.onResume();
+        Log.d("Calling onResume()", "1) OnResume() Excuted..");
+        Toast.makeText(getApplicationContext(),"1) onResume() Excuted..",Toast.LENGTH_LONG).show();
+    }
 
-Step 5: Verify the AAA authentication method.
-R1(config-line)# end
-User Access Verification
-Username: admin
-Password: adminpa55
-R1>
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Calling onPause()", "1) onPause() Excuted..");
+        Toast.makeText(getApplicationContext(), "1) onPause() Excuted..",Toast.LENGTH_LONG).show();
+    }
 
-Part 2: Configure Local AAA Authentication for vty Lines on R1
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Calling onRestart","1) onRestart() Excuted...");
+        Toast.makeText(getApplicationContext(), "1) onRestart() Excuted..",Toast.LENGTH_LONG).show();
+    }
 
-Step 1: Configure domain name and crypto key for use with SSH.
-R1(config)# ip domain-name ccnasecurity.com
-R1(config)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
 
-Step 2: Configure a named list AAA authentication method for the vty lines
-on R1.
-R1(config)# aaa authentication login SSH-LOGIN local
-
-Step 3: Configure the vty lines to use the defined AAA authentication
-method.
-R1(config)# line vty 0 4
-R1(config-line)# login authentication SSH-LOGIN
-R1(config-line)# transport input ssh
-R1(config-line)# end
-
-Step 4: Verify the AAA authentication method.
-PC0> ssh –l Admin 192.168.1.1
-Password: adminpa55
-R1>
-PC1> ssh –l Admin 192.168.1.1
-Password: adminpa55
-R1>
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Calling onDestroy", "1) onDestroy() Excuted..");
+        Toast.makeText(getApplicationContext(), "1) onDestroy() Excuted..",Toast.LENGTH_LONG).show();
+    }
+}
+        
 `;
 
         var text2 = ` 
-        ◼ Configure Router:
-Step 1: Configure password for vty lines
-R1(config) # line vty 0 4
-R1(config-line) #password vtypa55
-R1(config-line) #login
+        ACTIVITY_MAIN.XML
 
-Step 2: Configure secret on router
-R1(config) # enable secret enpa55
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E9B4F3"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.fragment.app.FragmentContainerView
+        
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.practical3.fragmentOne"
+        android:layout_width="199dp"
+        android:layout_height="369dp"
+        android:layout_margin="24dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/fragmentContainerView2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_one" />
+    
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.practical3.FragmentTwo"
+        android:layout_width="177dp"
+        android:layout_height="428dp"
+        android:layout_margin="24dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="149dp"
+        android:layout_marginEnd="173dp"
+        android:layout_marginBottom="279dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toEndOf="@id/fragmentContainerView"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
+        app:layout_constraintVertical_bias="0.131"
+        tools:layout="@layout/fragment_two" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Part 1: Configure, Apply and Verify an Extended Numbered
-ACL
-Step 1: Configure an ACL to permit FTP and ICMP. (Use Router 2911)
-R1(config)# access-list 100 permit tcp 172.22.34.64 0.0.0.31 host
-172.22.34.62 eq ftp
-R1(config)# access-list 100 permit icmp 172.22.34.64 0.0.0.31 host
-172.22.34.62
 
-Step 2: Apply the ACL on the correct interface to filter traffic.
-R1(config)# int gig 0/0
-R1(config-if)# ip access-group 100 in
+FRAGMENT_XML;
 
-Step 3: Verify the ACL implementation.
-a. Ping from PC1 to Server.
-PC1> ping 172.22.34.62
-(Successful)
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-b. FTP from PC1 to Server. The username and password are both cisco.
-PC1> ftp 172.22.34.62
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="243dp"
+        android:layout_height="353dp"
+        android:background="#ADC9DF"
+        android:contentDescription="test1"
+        android:src="@drawable/shihchab" />
+</FrameLayout>
 
-c. Exit the FTP service of the Server.
-ftp> quit
+FRAGMENT_TWO.XML;
 
-d. Ping from PC1 to PC2.
-PC1> ping 172.22.34.98
-(Unsuccessful) destination host unreachable
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
-Part 2: Configure, Apply and Verify an Extended Named ACL
-Step 1: Configure an ACL to permit HTTP access and ICMP.
-R1(config)# ip access-list extended HTTP_ONLY
-R1(config-ext-nacl)# permit tcp 172.22.34.96 0.0.0.15 host 172.22.34.62 eq
-www
-R1(config-ext-nacl)# permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.62
-
-Step 2: Apply the ACL on the correct interface to filter traffic.
-R1(config)# int gig0/1
-R1(config-if)# ip access-group HTTP_ONLY in
-
-Step 3: Verify the ACL implementation.
-a. Ping from PC2 to Server.
-PC2> ping 172.22.34.62
-(Successful)
-
-b. FTP from PC2 to Server
-PC2> ftp 172.22.34.62
-(Unsuccessful)
-
-c. Open the web browser on PC2.
-URL -> http://172.22.34.62
-(Successful)
-
-d. Ping from PC2 to PC1.
-PC> ping 172.22.34.66
-(Unsuccessful)
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="238dp"
+        android:layout_height="322dp"
+        android:background="#272935"
+        android:contentDescription="test2"
+        android:src="@drawable/pikachu" />
+</FrameLayout>
 `;
 
         var text3 = `
+        ACTIVITY_MAIN.XML
 
-        ◼ Configure Switch and Router:
-Step 1: Configure the IP address on switch
-SWA(config)# int vlan 1
-SWA(config-if)# ip address 10.101.117.50 255.255.255.248
-SWA(config-if)# no shut
-SWA(config-if)# ip default-gateway 10.101.117.49
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/txtTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="To:"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        >
+    </EditText>
+    <EditText
+        android:id="@+id/txtSub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Subject:"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        >
+    </EditText>
+    <EditText
+        android:id="@+id/txtMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Message:"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:layout_weight="1">
+    </EditText>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textSize="30dp"
+        android:text="Send" />
+</LinearLayout>
 
-SWB(config)# int vlan 1
-SWB(config-if)# ip address 10.101.117.34 255.255.255.240
-SWB(config-if)# no shut
-SWB(config-if)# ip default-gateway 10.101.117.33
-
-SWC(config)# int vlan 1
-SWC(config-if)# ip address 10.101.117.2 255.255.255.224
-SWC(config-if)# no shut
-SWC(config-if)# ip default-gateway 10.101.117.1
-
-Step 2: Configure the secret on router and switch
-RTA/SW(config)# enable secret enpa55
-
-Step 3: Configure the console password on router and switch
-RTA/SW(config)# line console 0
-RTA/SW(config)# password tyit
-RTA/SW(config)# login
-
-Step 4: Test connectivity
-Ping from PCA to PC-B.
-PCA>ping 10.101.117.35
-(Successful)
-Ping from PCA to SWC.
-PCA>ping 10.101.117.2
-(Successful)
-Ping from PCB to SWC.
-PCB>ping 10.101.117.2
-(Successful)
-
-Part 1: Configure Switch and Router to support SSH Connection
-Step 1: Configure domain name and crypto key for use with SSH.
-RTA/SW(config)# ip domain-name ccnasecurity.com
-
-Step 2: Configure users to login to SSH
-RTA/SW(config)# username admin secret adminpa55
-
-Step 3: Configure incoming vty lines
-RTA/SW(config)# line vty 0 4
-RTA/SW(config-line)# login local
-RTA/SW(config)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
-Step 4: Verify the SSH Connection
-PCA> ssh -l Admin 10.101.117.34
-Password: adminpa55
-
-SWB>
-PCA> ssh -l Admin 10.101.117.2
-Password: adminpa55
-SWC>
-PCB> ssh -l Admin 10.101.117.50
-Password: adminpa55
-SWA>
-PCB> ssh -l Admin 10.101.117.2
-Password: adminpa55
-SWC>
-SWC> ssh -l Admin 10.101.117.50
-Password: adminpa55
-SWA>
-SWC> ssh -l Admin 10.101.117.34
-Password: adminpa55
-SWB>
-SWB> exit
-
-Part 2: Configure, Apply and Verify an Extended Numbered
-ACL
-Step 1: Configure the extended ACL.
-RTA(config)# access-list 199 permit tcp 10.101.117.32 0.0.0.15 10.101.117.0
-0.0.0.31 eq 22
-RTA(config)# access-list 199 permit icmp any any
-
-Step 2: Apply the extended ACL.
-RTA(config)# int gig0/2
-RTA(config-if)# ip access-group 199 out
-
-Step 3: Verify the extended ACL implementation.
-a. Ping from PCB to all of the other IP addresses in the network.
-PCB> ping 10.101.117.51
-(Successful)
-PCB> ping 10.101.117.2
-(Successful)
-
-b. SSH from PCB to SWC.
-PCB> ssh -l Admin 10.101.117.2
-Password:adminpa55
-SWC>
-
-c. Exit the SSH session to SWC.
-SWC>exit
-
-d. Ping from PCA to all of the other IP addresses in the network.
-PCA> ping 10.101.117.35
-(Successful)
-PCA> ping 10.101.117.2
-(Successful)
-
-e. SSH from PCA to SWC
-PCA> ssh -l Admin 10.101.117.2
-
-Connection timed out. Remote host not responding
-
-f. SSH from PCA to SWB.
-PCA> ssh -l Admin 10.101.117.34
-Password: adminpa55
-SWB>
-
-g. After logging into SWB, do not log out. SSH to SWC in privileged EXEC
-mode.
-SWB# ssh -l Admin 10.101.117.2
-Password: adminpa55
-SWC>
 `;
 
         var text4 = `
+        ACTIVITY_MAIN.XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/enterno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a Number:"/>
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7"
+        android:layout_below="@id/enterno"/>
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8"
+        android:layout_below="@id/enterno"
+        android:layout_toRightOf="@id/button7"/>
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9"
+        android:layout_below="@id/enterno"
+        android:layout_toRightOf="@id/button8"/>
+    <Button
+        android:id="@+id/buttonx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_below="@id/enterno"
+        android:layout_toRightOf="@id/button9"/>
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:layout_below="@id/button7"/>
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:layout_below="@id/button8"
+        android:layout_toRightOf="@id/button4"/>
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6"
+        android:layout_below="@id/button9"
+        android:layout_toRightOf="@id/button5"/>
+    <Button
+        android:id="@+id/buttondash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_below="@id/buttonx"
+        android:layout_toRightOf="@id/button6"/>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:layout_below="@id/button4"/>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:layout_below="@id/button5"
+        android:layout_toRightOf="@id/button1"/>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:layout_below="@id/button6"
+        android:layout_toRightOf="@id/button2"/>
+    <Button
+        android:id="@+id/buttonplus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:layout_below="@id/buttondash"
+        android:layout_toRightOf="@id/button3"/>
+    <Button
+        android:id="@+id/buttondot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="."
+        android:layout_below="@id/button1"/>
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_below="@id/button2"
+        android:layout_toRightOf="@id/buttondot"/>
+    <Button
+        android:id="@+id/buttonslash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:layout_below="@id/button3"
+        android:layout_toRightOf="@id/button0"/>
+    <Button
+        android:id="@+id/buttonequals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="="
+        android:layout_below="@id/buttonplus"
+        android:layout_toRightOf="@id/buttonslash"/>
+</RelativeLayout>    
+
         
-
-        ◼ Configure Router:
-Step 1: Configure secret on router
-R(config) # enable secret enpa55
-
-Step 2: Configure console password on router
-R(config) # line console 0
-R(config-line) #password conpa55
-R(config-line) #login
-
-Step 3: Configure SSH login on router
-Execute command on all routers
-R(config)# ip domain-name ccnasecurity.com
-R(config)# username admin secret adminpa55
-R(config)# line vty 0 4
-R(config-line)# login local
-R(config-line)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
-
-Step 4: Configure loop back address on Router 2
-R2(config)#int loopback 0
-R2(config-if)#ip address 192.168.2.1 255.255.255.0
-R2(config-if)# no shut
-
-Step 5: Configure static routing on routers
-Execute command on all routers
-R1(config)#ip route 192.168.3.0 255.255.255.0 10.1.1.2
-
-R1(config)#ip route 10.2.2.0 255.255.255.252 10.1.1.2
-R1(config)#ip route 192.168.2.0 255.255.255.0 10.1.1.2
-
-R2(config)#ip route 192.168.1.0 255.255.255.0 10.1.1.1
-R2(config)#ip route 192.168.3.0 255.255.255.0 10.2.2.1
-
-R3(config)#ip route 192.168.1.0 255.255.255.0 10.2.2.2
-R3(config)#ip route 192.168.2.0 255.255.255.0 10.2.2.2
-R3(config)#ip route 10.1.1.0 255.255.255.0 10.2.2.2
-
-Part 2: Verify Basic Network Connectivity
-Step 1: From PC-A, verify connectivity to PC-C and R2.
-PCA> ping 192.168.3.3
-(Successful)
-PCA> ping 192.168.2.1
-(Successful)
-PCA> ssh –l admin 192.168.2.1
-Password: adminpa55
-R2>exit
-
-Step 2: From PC-C, verify connectivity to PC-A and R2.
-PCC> ping 192.168.1.3
-(Successful)
-PCC> ping 192.168.2.1
-(Successful)
-PCC> ssh –l admin 192.168.2.1
-
-Password: adminpa55
-R2>exit
-Open a web browser to the PC-A server (192.168.1.3) to display the web page.
-Close the browser when done.
-Desktop->Web Browser->192.168.1.3
-(Successful)
-
-Part 3: Secure Access to Routers
-Step 1: Configure ACL 10 to block all remote access to the routers except
-from PC-C
-Execute command on all routers
-R(config)# access-list 10 permit host 192.168.3.3
-
-Step 2: Apply ACL 10 to ingress traffic on the VTY lines.
-Execute command on all routers
-R(config)# line vty 0 4
-R(config-line)# access-class 10 in
-
-Step 3: Verify exclusive access from management station PC-C.
-PCC> ssh –l admin 192.168.2.1
-Password: adminpa55
-R2>exit
-
-Step 4: Verify denial from PC-A.
-PCA> ssh –l admin 192.168.2.1
-Connection refused by remote host
-
-Part 4: Create a Numbered IP ACL 120 on R1
-Step 1: Verify that PC-C can access the PC-A via HTTPS using the web
-browser.
-Be sure to disable HTTP and enable HTTPS on server PC-A in Services tab.
-
-Step 2: Configure ACL 120 to specifically permit and deny the specified
-traffic.
-R1(config)# access-list 120 permit udp any host 192.168.1.3 eq domain
-R1(config)# access-list 120 permit tcp any host 192.168.1.3 eq smtp
-R1(config)# access-list 120 permit tcp any host 192.168.1.3 eq ftp
-R1(config)# access-list 120 deny tcp any host 192.168.1.3 eq 443
-R1(config)# access-list 120 permit tcp host 192.168.3.3 host 10.1.1.1 eq 22
-
-Step 3: Apply the ACL to interface
-R1(config)# int se0/1/0
-R1(config-if)# ip access-group 120 in
-
-Step 4: Verify that PC-C cannot access PC-A via HTTPS using the web
-browser.
-Desktop->Web Browser->192.168.1.3
-(Unsuccessful) Request timed out
-
-Part 5: Modify an Existing ACL on R1
-Step 1: Verify that PC-A cannot successfully ping the loopback interface on
-R2.
-PCA> ping 192.168.2.1
-(Unsuccessful) Request timed out
-
-Step 2: Make any necessary changes to ACL 120 to permit and deny the
-specified traffic.
-R1(config)# access-list 120 permit icmp any any echo-reply
-R1(config)# access-list 120 permit icmp any any unreachable
-R1(config)# access-list 120 deny icmp any any
-R1(config)# access-list 120 permit ip any any
-
-Step 3: Verify that PC-A can successfully ping the loopback interface on
-R2.
-PCA> ping 192.168.2.1 (Successful)
-
-Part 6: Create a Numbered IP ACL 110 on R3
-Step 1: Configure ACL 110 to permit only traffic from the inside network.
-R3(config)# access-list 110 permit ip 192.168.3.0 0.0.0.255 any
-
-Step 2: Apply the ACL to interface
-R3(config)# int gig0/1
-R3(config-if)# ip access-group 110 in
-
-Part 7: Create a Numbered IP ACL 100 on R3
-Step 1: Configure ACL 100 to block all specified traffic from the outside
-network.
-R3(config)# access-list 100 permit tcp 10.0.0.0 0.255.255.255 host 192.168.3.3
-eq 22
-R3(config)# access-list 100 deny ip 10.0.0.0 0.255.255.255 any
-R3(config)# access-list 100 deny ip 172.16.0.0 0.15.255.255 any
-R3(config)# access-list 100 deny ip 192.168.0.0 0.0.255.255 any
-R3(config)# access-list 100 deny ip 127.0.0.0 0.255.255.255 any
-R3(config)# access-list 100 deny ip 224.0.0.0 15.255.255.255 any
-R3(config)# access-list 100 permit ip any any
-
-Step 2: Apply the ACL to interface
-R3(config)# interface se0/1/0
-R3(config-if)# ip access-group 100 in
-
-Step 3: Confirm that the specified traffic entering interface Serial is
-handled correctly.
-PCC> ping 192.168.1.3
-(Unsuccessful)
-PCC> ssh –l admin 192.168.2.1
-Password: adminpa55
-R2>exit
   `;
   
         var text5 = `
+        ACTIVITY_MAIN.XML
 
-        ◼ Configure Router:
-Step 1: Configure secret on router
-Execute command on all routers
-R(config)# enable secret enpa55
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Table Desgined by Amit K"
+        android:layout_below="@id/button1"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"/>
+    <TableLayout
+        android:id="@+id/Table1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="70dp">
+        <TableRow
+            android:background="@color/red">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Place"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="8dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="766"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amit"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jaipur"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="878"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saloni"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kolapur"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="873"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payal"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Konkan"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="870"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Srushti"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Malwan"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:id="@+id/button1"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hide"
+        android:onClick="submit"
+        android:layout_below="@id/Table1"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
 
-Step 2: Assign static ipv6 address
-R1(config)# int gig0/0
-R1(config-if)# ipv6 address 2001:DB8:1:10::1/64
-R1(config-if)# ipv6 address FE80::1 link-local
-R1(config-if)# no shut
+MAIN_ACTIVIY.COM
 
-R1(config)# int gig0/1
-R1(config-if)# ipv6 address 2001:DB8:1:11::1/64
-R1(config-if)# ipv6 address FE80::1 link-local
-R1(config-if)# no shut
+package com.example.practical4
 
-R1(config)# int se0/1/0
-R1(config-if)# ipv6 address 2001:DB8:1:1::1/64
-R1(config-if)# ipv6 address FE80::1 link-local
-R1(config-if)# no shut
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.TableLayout
+class MainActivity : AppCompatActivity() {
+    var bool = true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+    fun submit(view: View) {
+        val tblobj: TableLayout =findViewById(R.id.Table1)
+        val btn: Button =findViewById(R.id.button1)
+        tblobj.setColumnCollapsed(1,bool)
+        tblobj.setColumnCollapsed(2,bool)
+        if (bool) {
+            bool=false
+            btn.text="show"
+        }else{
+            bool=true
+            btn.text="Hide"
+        }
+    }
+}
 
-R2(config)# int se0/1/0
-R2(config-if)# ipv6 address 2001:DB8:1:1::2/64
-R2(config-if)# ipv6 address FE80::2 link-local
-R2(config-if)# no shut
-
-R2(config)# int se0/1/1
-
-R2(config-if)# ipv6 address 2001:DB8:1:2::2/64
-R2(config-if)# ipv6 address FE80::2 link-local
-R2(config-if)# no shut
-
-R3(config)# int gig0/0
-R3(config-if)# ipv6 address 2001:DB8:1:30::1/64
-R3(config-if)# ipv6 address FE80::3 link-local
-R3(config-if)# no shut
-
-R3(config)# int se0/1/0
-R3(config-if)# ipv6 address 2001:DB8:1:2::1/64
-R3(config-if)# ipv6 address FE80::3 link-local
-R3(config-if)# no shut
-
-Step 3: Enable IPv6 routing
-R1(config)# ipv6 unicast-routing
-R1(config)# ipv6 route 2001:DB8:1:2::0/64 2001:DB8:1:1::2
-R1(config)# ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:1::2
-
-R2(config)# ipv6 unicast-routing
-R2(config)# ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:1::1
-R2(config)# ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:1::1
-R2(config)# ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:2::1
-
-R3(config)# ipv6 unicast-routing
-R3(config)# ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:2::2
-R3(config)# ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:2::2
-R3(config)# ipv6 route 2001:DB8:1:1::0/64 2001:DB8:1:2::2
-
-Step 4: Verify connectivity
-PC1> ping 2001:DB8:1:30::30
-(Successful)
-PC2> ping 2001:DB8:1:30::30
-(Successful)
-
-Part 2: Configure, Apply, and Verify an IPv6 ACL
-Step 1: Configure an ACL that will block HTTP and HTTPS access.
-R1(config)# ipv6 access-list BLOCK_HTTP
-R1(config-ipv6-acl)# deny tcp any host 2001:DB8:1:30::30 eq www
-R1(config-ipv6-acl)# deny tcp any host 2001:DB8:1:30::30 eq 443
-R1(config-ipv6-acl)# permit ipv6 any any
-R1(config-ipv6-acl)# exit
-
-Step 2: Apply the ACL to the correct interface.
-R1(config)# int gig0/1
-R1(config-if)# ipv6 traffic-filter BLOCK_HTTP in
-
-Step 3: Verify the ACL implementation
-Open a web browser to the PC1 to display the web page.
-Desktop->Web Browser->http://2001:DB8:1:30::30
-(Successful)
-Desktop->Web Browser->https://2001:DB8:1:30::30
-(Successful)
-
-Open a web browser to the PC2 to display the web page.
-Desktop->Web Browser->http://2001:DB8:1:30::30
-(Unsuccessful) – Request Timeout
-Desktop->Web Browser->https://2001:DB8:1:30::30
-(Unsuccessful) – Request Timeout
-PC2> ping 2001:DB8:1:30::30
-(Successful)
-
-Part 3: Configure, Apply, and Verify a Second IPv6 ACL
-Step 1: Create an access list to block ICMP.
-R3(config)# ipv6 access-list BLOCK_ICMP
-R3(config-ipv6-acl)# deny icmp any any
-R3(config-ipv6-acl)# permit ipv6 any any
-R3(config-ipv6-acl)# exit
-
-Step 2: Apply the ACL to the correct interface.
-R3(config)# int gig0/0
-R3(config-if)# ipv6 traffic-filter BLOCK_ICMP out
-
-Step 3: Verify that the proper access list functions.
-PC2> ping 2001:DB8:1:30::30
-(Unsuccessful) - Destination host unreachable
-PC1> ping 2001:DB8:1:30::30
-(Unsuccessful) - Destination host unreachable
-
-Open a web browser to the PC1 to display the web page.
-Desktop->Web Browser->http://2001:DB8:1:30::30
-(Successful)
-Desktop->Web Browser->https://2001:DB8:1:30::30
-(Successful)
 `;
 
         var text6 = `
         
-         Configure Router:
-Step 1: Configure console password on router
-Execute command on all routers
-R(config) # line console 0
-R(config-line) #password conpa55
-R(config-line) #login
+        ACTIVITY_MAIN.XML
 
-Step 2: Configure password for vty lines
-Execute command on all routers
-R(config)# line vty 0 4
-R(config-line)# password vtypa55
-R(config-line)# login
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2196F3" android:backgroundTint="#2196F3"
+    android:orientation="vertical" tools:context=".MainActivity">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alignmentMode="alignMargins" android:columnCount="2"
+        android:rowCount="3" tools:ignore="UselessParent">
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="0"
+            android:layout_rowWeight="1" android:layout_column="0"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp" android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:maxHeight="30dp" android:minHeight="5dp"
+                    android:src="@drawable/kfc" tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:maxHeight="30dp" android:text="KFC"
+                    android:textSize="20sp" android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="0"
+            android:layout_rowWeight="1" android:layout_column="1"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp" android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:maxHeight="30dp" android:minHeight="5dp"
+                    android:src="@drawable/dominos" tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:maxHeight="30dp" android:text="Dominos"
+                    android:textSize="20sp" android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="1"
+            android:layout_rowWeight="1" android:layout_column="0"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp" android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:maxHeight="30dp" android:minHeight="5dp"
+                    android:src="@drawable/lv" tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:maxHeight="30dp" android:text="Louis Vitton"
+                    android:textSize="20sp" android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="1"
+            android:layout_rowWeight="1" android:layout_column="1"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp" android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:maxHeight="30dp" android:minHeight="5dp"
+                    android:src="@drawable/versace" tools:ignore="ContentDescription"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:maxHeight="30dp" android:text="Versace"
+                    android:textSize="20sp" android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="2"
+            android:layout_rowWeight="1" android:layout_column="0"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp" android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:maxHeight="30dp" android:minHeight="0dp"
+                    android:src="@drawable/mg"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:text="MG" android:textSize="20sp"
+                    android:textStyle="bold" tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:layout_width="0dp"
+            android:layout_height="0dp" android:layout_row="2"
+            android:layout_rowWeight="1" android:layout_column="1"
+            android:layout_columnWeight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="195dp" android:layout_height="150dp"
+                    android:layout_gravity="center" android:layout_margin="5dp"
+                    android:maxHeight="30dp"
+                    android:minHeight="5dp" android:src="@drawable/audi" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_margin="5dp"
+                    android:background="#FFEB3B" android:gravity="center"
+                    android:text="Audi" android:textSize="20sp"
+                    android:textStyle="bold" tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </GridLayout>
+</RelativeLayout>
+`;
 
-Step 3: Configure secret on router
-R(config) # enable secret enpa55
+var text7= `
+MENU.XML
 
-Step 4: Configure SSH login on router
-Execute command on all routers
-R(config)# ip domain-name ccnasecurity.com
-R(config)# username admin secret adminpa55
-R(config)# line vty 0 4
-R(config-line)# login local
-R(config-line)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
-Step 5: Configure static routing on routers
-Execute command on all routers
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/setting"
+        android:title="setting"
+        android:icon="@drawable/setting"
+        app:showAsAction="never">
+    </item>
+    <item android:id="@+id/copy"
+        android:title="copy"
+        android:icon="@drawable/copy"
+        app:showAsAction="ifRoom"
+        >
+    </item>
+    <item android:id="@+id/download"
+        android:title="download"
+        android:icon="@drawable/download"
+        app:showAsAction="ifRoom"
+        >
+    </item>
+</menu>
 
-R(config)#ip route destination-network-address subnetmask next-hop-
-destination-address
 
-Part 2: Verify Basic Network Connectivity
-Step 1: Check connectivity from PCA to PCC
-PCA>ping 192.168.3.3
-(Successful)
-Step 2: Access R2 using SSH.
-PCC>ssh –l admin 10.2.2.2
-Password:adminpa55
-R2>exit
-Step 3: From PC-C, open a web browser to the PC-A server.
-Desktop -> Web Browser
-URL: http://192.168.1.3
-(Successful)
+MAINACTIVITY.KT
 
-Part 3: Create the Firewall Zones on R3
-Step 1: Verify that the Security Technology package
-R3# show version
 
-Step 2: Enable the Security Technology package
-R3(config)# license boot module c1900 technology-package securityk9
+package com.example.pratical5
 
-Step 3: Save the running-config and reload the router
-R3#copy run start
-R3# reload
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val actionBar = supportActionBar
+        actionBar?.title = "878_766"
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menufile, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.download -> {
+                Toast.makeText(this, "Downloading the file. ... ", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.copy -> {
+                true
+            }
+            R.id.setting -> {
+                val settingIntent = Intent(Settings.ACTION_SETTINGS)
+                startActivity(settingIntent)
+                true
+            }
+            else -> {
+                throw IllegalStateException("Unexpected value: ${item.itemId}")
+            }
+        }
+    }
+}
 
-Step 4: Verify that the Security Technology package
-R3# show version
 
-Step 5: Create an internal zone.
-R3(config)# zone security IN-ZONE
-R3(config-sec-zone)# exit
+`;
 
-Step 6: Create an external zone.
-R3(config)# zone security OUT-ZONE
-R3(config-sec-zone)# exit
+var text8 = `
+ACTIVITY_MAIN.XML
 
-Part 4: Identify Traffic Using a Class-Map
-Step 1: Create an ACL that defines internal traffic.
-R3(config)# access-list 101 permit ip 192.168.3.0 0.0.0.255 any
 
-Step 2: Create a class map referencing the internal traffic ACL
-R3(config)# class-map type inspect match-all IN-NET-CLASS-MAP
-R3(config-cmap)# match access-group 101
-R3(config-cmap)# exit
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/rateMeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="878_766_Rate Me"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Part 5: Specify Firewall Policies
-Step 1: Create a policy map to determine what to do with matched traffic.
-R3(config)# policy-map type inspect IN-2-OUT-PMAP
 
-Step 2: Specify a class type of inspect and reference class map IN-NET-
-CLASS-MAP.
+FRAGMENT_CUSTOMDIALOG.XML
 
-R3(config-pmap)# class type inspect IN-NET-CLASS-MAP
 
-Step 3: Specify the action of inspect for this policy map.
-R3(config-pmap-c)# inspect
-R3(config-pmap-c)# exit
-R3(config-pmap)# exit
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Your Ratings Matters"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <RadioGroup
+        android:id="@+id/ratingRadioGroup"
+        android:layout_width="352dp"
+        android:layout_height="356dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+        <RadioButton
+            android:id="@+id/excellentRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="Excellent"
+            android:textSize="20dp" />
+        <RadioButton
+            android:id="@+id/veryGoodRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Very Good"
+            android:textSize="20dp" />
+        <RadioButton
+            android:id="@+id/GoodRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good"
+            android:textSize="20dp" />
+        <RadioButton
+            android:id="@+id/neutralRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neutral"
+            android:textSize="20dp" />
+        <RadioButton
+            android:id="@+id/badRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bad"
+            android:textSize="20dp" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F38888"
+        android:text="CANCEL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingRadioGroup" />
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#4CAF50"
+        android:text="SUBMIT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toEndOf="@+id/cancel"
+        app:layout_constraintTop_toBottomOf="@+id/ratingRadioGroup" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Part 6: Apply Firewall Policies
-Step 1: Create a pair of zones.
-R3(config)# zone-pair security IN-2-OUT-ZPAIR source IN-ZONE destination
-OUTZONE
 
-Step 2: Specify the policy map for handling the traffic between the two
-zones.
-R3(config-sec-zone-pair)# service-policy type inspect IN-2-OUT-PMAP
-R3(config-sec-zone-pair)# exit
-R3(config)#
+MAINACTIVITY.KT
 
-Step 3: Assign interfaces to the appropriate security zones.
-R3(config)# int g0/0
-R3(config-if)# zone-member security IN-ZONE
-R3(config-if)# exit
-R3(config)# int s0/1/0
-R3(config-if)# zone-member security OUT-ZONE
-R3(config-if)# exit
 
-Step 4: Copy the running configuration to the startup configuration.
-R3# copy run start
-R3# reload
+package com.example.practical6
 
-Part 7: Test Firewall Functionality from IN-ZONE to OUT
-ZONE
-Step 1: From internal PC-C, ping the external PC-A server.
-PCC>ping 192.168.1.3
-(Successful)
+import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val rateMeTextView: TextView = findViewById(R.id.rateMeTextView)
+        // Set click listener for rateMeTextView
+        rateMeTextView.setOnClickListener {
+            // Create an instance of CustomDialogFragment
+            var dialog = CustomDialogFragment()
+            // Show the dialog
+            dialog.show(supportFragmentManager, "customDialog")
+        }
+    }
+    //6A : Alert Dialog Example
+    // Override onBackPressed method
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        // Create an AlertDialog.Builder
+        val builder = AlertDialog.Builder(this)
+        // Set the title of the dialog
+        builder.setTitle("Are you sure?")
+        // Set the message of the dialog
+        builder.setMessage("Are you sure you want to close the app?")
+        // Set positive button and its click listener
+        builder.setPositiveButton("Yes") { dialogInterface, i -> finish()
+            // Finish the activity when "Yes" is clicked
+        }
+        // Set negative button and its click listener
+        builder.setNegativeButton("No") { dialogInterface, i ->
+            // Do nothing when "No" is clicked
+        }
+// Show the dialog
+        builder.show()
+    }
+}
 
-Step 2: Access R2 using SSH.
-PCC>ssh –l admin 10.2.2.2
-Password:
-R2>
 
-Step 3: View established sessions
-R3# show policy-map type inspect zone-pair sessions
-Session 175216232 (192.168.3.3:1028)=>(10.2.2.2:22) tcp
-SIS_OPEN/TCP_ESTAB
+CUSTOMDIALOGFRAGMENT.KT
 
-Step 4: From PC-C, exit the SSH session on R2 and close the command
-prompt window.
-R2>exit
+package com.example.practical6
 
-Step 5: From internal PC-C, open a web browser to the PC-A server web
-page.
-Desktop -> Web Browser
-URL: http://192.168.1.3
-(Successful)
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+class CustomDialogFragment: DialogFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        var
+                rootView:View=inflater.inflate(R.layout.fragment_customdialog,container,false)
+        // Find the radio group in the layout
+        val ratingRadioGroup =
+            rootView.findViewById<RadioGroup>(R.id.ratingRadioGroup)
+        // Find the cancel button in the layout
+        val btnCancel = rootView.findViewById<Button>(R.id.cancel)
+        // Find the submit button in the layout
+        val btnSubmit = rootView.findViewById<Button>(R.id.submit)
+        // Set a click listener for the cancel button
+        btnCancel.setOnClickListener {
+            // Dismiss the dialog when cancel button is clicked
+            dismiss()
+        }
+        // Set a click listener for the submit button
+        btnSubmit.setOnClickListener{
+            // Get the ID of the selected radio button
+            val selectedID = ratingRadioGroup.checkedRadioButtonId
+            // Find the selected radio button
+            val radio = rootView.findViewById<RadioButton>(selectedID)
+            // Get the text of the selected radio button
+            var ratingResult = radio.text.toString()
+            // Show a toast with the selected rating
+            Toast.makeText(context,"You rated:$ratingResult",Toast.LENGTH_LONG).show()
+            // Dismiss the dialog
+            dismiss()
+        }
+        // Return the inflated view
+        return rootView
+    }
+}
 
-Step 6: View established sessions
-R3# show policy-map type inspect zone-pair sessions
+`;
+var text9 = `
+ACTIVITY_MAIN.XML
 
-Session 565266624 (192.168.3.3:1031)=>(192.168.1.3:80) tcp
-SIS_OPEN/TCP_ESTAB
 
-Part 8: Test Firewall Functionality from OUT-ZONE to IN-
-ZONE
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="406dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="288dp"
+        android:hint="Username"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="25dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:layout_editor_absoluteX="0dp" />
+    <Button
+        android:id="@+id/loginbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="878_766_LOGIN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass"
+        app:layout_constraintVertical_bias="0.307" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Step 1: From internal PC-A, ping the external PC-C server.
-PCA>ping 192.168.3.3
-(Unsuccessful – Request timed out)
 
-Step 2: From R2, ping PC-C.
-R2# ping 192.168.3.3
-(Unsuccessful – Request timed out)
+SECOND_ACTIVITY.XML
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="878_766_hello"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+MAINACTIVTY.KT
+
+package com.example.practical7
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.content.Intent
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.SecondActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val usernameEditText = findViewById<EditText>(R.id.username)
+        val passwordEditText = findViewById<EditText>(R.id.pass)
+        val loginButton = findViewById<Button>(R.id.loginbtn)
+        loginButton.setOnClickListener {
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            // Check if username and password are correct
+            if (username == "Saloni&AK" && password == "pass@123") {
+                // If correct, launch SecondActivity
+                val intent = Intent(this, SecondActivity::class.java)
+                intent.putExtra("username", username)
+                startActivity(intent)
+                Toast.makeText(this,"Login Successful!",Toast.LENGTH_LONG).show()
+            } else {
+                // If incorrect, display error message
+                Toast.makeText(this, "Invalid username or password",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
+
+
+
+SECOUNDACTIVITY.KT
+
+package com
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.practical7.R
+
+class SecondActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.second_activity)
+        val username = intent.getStringExtra("username")
+        //val homebtn = findViewById<Button>(R.id.homepg)
+        val greetingTextView = findViewById<TextView>(R.id.display)
+        greetingTextView.text = "Hello $username!"
+        fun onBackPressed() {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Are you sure")
+            builder.setMessage("Do you want to close app")
+            builder.setPositiveButton("Yes", { dialogInterface, i ->
+                finishAffinity() })
+            builder.setNegativeButton("No", { dialogInterface, i -> })
+            builder.show()
+        }
+    }
+}
+
+
+
+
+
+`;
+var text10 = `
+ACTIVITY_MAIN.XML
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="878_862_766_Notification"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/notifybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SHOW NOTIFICATION"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.246" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+ANDROIDMANIFEST.XML
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Base.Theme.Practical8"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+
+
+
+MAINACTIVTY.KT
+
+package com.example.practical8
+
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+class MainActivity : AppCompatActivity() {
+    private val CHANNEL_ID = "My_Channel"
+    private val notificationId = 101
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        createNotificationChannel()
+        val button = findViewById<Button>(R.id.notifybtn)
+        button.setOnClickListener {
+            showNotification()
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "My Channel"
+            val descriptionText = "My Notification Channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name,
+                importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as
+                        NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    @SuppressLint("MissingPermission")
+    private fun showNotification() {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.notify)
+            .setContentTitle("My Notification")
+            .setContentText("This is a notification created by a button click")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    with(NotificationManagerCompat.from(this)) {
+                notify(notificationId, builder.build())
+            }
+    }
+}
 
 
 
 `;
 
-var text7= `Enable IOS IPS.
-• Configure logging.• Modify an IPS signature.• Verify IPS
-      
-        Part 1: Configure router
-Step 1: Configure secret on router
-Execute command on all routers
-R(config)# enable secret enpa55
+var text11 = `
+ACTIVITY_MAIN.XML
 
-Step 2: Configure console password on router
-Execute command on all routers
-R(config)# line console 0
-R(config-line)# password conpa55
-R(config-line)# login
 
-Step 3: Configure SSH login on router
-Execute command on all routers
-R(config)# ip domain-name ccnasecurity.com
-R(config)# username admin secret adminpa55
-R(config)# line vty 0 4
-R(config-line)# login local
-R(config)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Network Testing of Roll No 878_766"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="32sp"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Step 4: Configure OSPF on routers
-Execute command on router 1
-R1(config)#router ospf 1
-R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
-R1(config-router)# network 10.1.1.0 0.0.0.3 area 0
 
-Execute command on router 2
-R2(config)#router ospf 1
-R2(config-router)# network 10.1.1.0 0.0.0.3 area 0
-R2(config-router)# network 10.2.2.0 0.0.0.3 area 0
+ANDROIDMANIFEST.XML
 
-Execute command on router 3
-R3(config)#router ospf 1
-R3(config-router)# network 10.2.2.0 0.0.0.3 area 0
-R3(config-router)# network 192.168.3.0 0.0.0.255 area 0
-Part 2: Enable IOS IPS
-Step 1: Enable the Security Technology package
-R1# show version
-Part 2: Enable IOS IPS
-Step 1: Enable the Security Technology package
-R1# show version
 
-(When command “show version” is given the above result comes, remember for further
-practical’s)
-R1(config)# license boot module c1900 technology-package securityk9
-(Type yes)
-R1# copy run start
-R1# reload
-R1# show version
 
-(When command “show version” is given again the above result comes to check If security
-is enabled or not, remember for further practical’s)
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.practical8b">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
+    </uses-permission>
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat"
+        tools:targetApi="31">
+        <activity
+            android:name="com.example.practical8b.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
 
-Step 2: Verify network connectivity
-PCA> ping 192.168.3.2
-(Successful)
-PCC> ping 192.168.1.2
-(Successful)
 
-Step 3: Create an IOS IPS configuration directory in flash.
-R1# mkdir ipsdir
-Create directory filename [ipsdir]? <Enter>
 
-Step 4: Configure the IPS signature storage location.
-R1(config)# ip ips config location flash:ipsdir
 
-Step 5: Create an IPS rule
-R1(config)# ip ips name iosips
+MAINACTIVITY.KT
 
-Step 6: Enable logging.
-R1(config)# ip ips notify log
-R1# clock set hr:min:sec date month year
-R1(config)# service timestamps log datetime msec
-R1(config)# logging host 192.168.1.50
 
-Step 7: Configure IOS IPS to use the signature categories.
-R1(config)# ip ips signature-category
-R1(config-ips-category)# category all
-R1(config-ips-category-action)# retired true
+package com.example.practical8b
 
-R1(config-ips-category-action)# exit
-R1(config-ips-category)# category ios_ips basic
-R1(config-ips-category-action)# retired false
-R1(config-ips-category-action)# exit
-R1(config-ips-cateogry)# exit
-Do you want to accept these changes? [confirm] <Enter>
-
-Step 8: Apply the IPS rule to an interface.
-R1(config)# int gig0/0
-R1(config-if)# ip ips iosips out
-
-Step 9: Use show commands to verify IPS.
-R1# show ip ips all
-(Output)
-
-Step 10: View the syslog messages.
-Click the Syslog server->Services tab-> SYSLOG
-(Output)
-
-Part 3: Modify the Signature
-Step 1: Change the event-action of a signature.
-R1(config)# ip ips signature-definition
-R1(config-sigdef)# signature 2004 0
-R1(config-sigdef-sig)# status
-R1(config-sigdef-sig-status)# retired false
-R1(config-sigdef-sig-status)# enabled true
-R1(config-sigdef-sig-status)# exit
-R1(config-sigdef-sig)# engine
-
-R1(config-sigdef-sig-engine)# event-action produce-alert
-R1(config-sigdef-sig-engine)# event-action deny-packet-inline
-R1(config-sigdef-sig-engine)# exit
-R1(config-sigdef-sig)# exit
-R1(config-sigdef)# exit
-Do you want to accept these changes? [confirm] <Enter>
-
-Step 2: Use show commands to verify IPS.
-R1# show ip ips all
-(Output)
-
-Step 3: Verify that IPS is working properly.
-PCC> ping 192.168.1.2(Unsuccessful – Request timed out)
-PCA> ping 192.168.3.2(Successful)
-
-Step 4: View the syslog messages.
-Click the Syslog server->Services tab-> SYSLOG
-
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.content.Context
+import android.net.ConnectivityManager
+import android.widget.Toast
+@Suppress("DEPRECATION")
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val c = applicationContext.getSystemService(
+            Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkinfo = c.activeNetworkInfo
+        if( networkinfo != null && networkinfo.isConnected)
+        {
+            if(networkinfo.type == ConnectivityManager.TYPE_MOBILE)
+            {
+                Toast.makeText(applicationContext,
+                    "Connected to Mobile Network",Toast.LENGTH_LONG).show()
+            }
+            if(networkinfo.type == ConnectivityManager.TYPE_WIFI)
+            {
+                Toast.makeText(applicationContext,
+                    "Connected to WIFI Network",Toast.LENGTH_LONG).show()
+            }
+        }
+        else{
+            Toast.makeText(applicationContext,
+                "You are offline",Toast.LENGTH_LONG).show()
+        }
+    }
+}
 
 
 
 `;
 
-var text8 = `Assign the Central switch as the root bridge.
-• Secure spanning-tree parameters to prevent STP manipulation attacks.
-• Enable port security to prevent CAM table overflow attacks.
-
-        Part 1: Configure Switch / Router
-Step 1: Configure secret
-Execute command on all switches and router
-R1/SW(config) # enable secret enpa55
-
-Step 2: Configure console password
-Execute command on all switches and router
-R1/SW(config)# line console 0
-R1/SW(config-line)# password conpa55
-R1/SW(config-line)# login
-
-Step 3: Configure SSH login
-Execute command on all switches and router
-R1/SW(config)# ip domain-name ccnasecurity.com
-R1/SW(config)# username admin secret adminpa55
-R1/SW(config)# line vty 0 4
-R1/SW(config-line)# login local
-R1/SW(config-line)# crypto key generate rsa
-How many bits in the modulus [512]: 1024
-
-Part 2: Configure Root Bridge
-Step 1: Determine the current root bridge.
-Central# show spanning-tree
-SW1# show spanning-tree
-
-Step 2: Assign Central as the primary root bridge.
-Central(config)# spanning-tree vlan 1 root primary
-Central# show spanning-tree
-
-Step 3: Assign SW-1 as a secondary root bridge.
-SW1(config)# spanning-tree vlan 1 root secondary
-SW1# show spanning-tree
-
-Part 3: Protect Against STP Attacks
-Step 1: Enable PortFast on all access ports.
-SWA/B(config)# int range fa0/1 - 4
-SWA/B(config-if-range)# spanning-tree portfast
-
-Step 2: Enable BPDU guard on all access ports.
-SWA/B(config)# int range fa0/1 - 4
-SWA/B(config-if-range)# spanning-tree bpduguard enable
-
-Step 3: Enable root guard.
-SW-1/2(config)# int range fa0/23 - 24
-SW-1/2(config-if-range)# spanning-tree guard root
-
-Part 4: Configure Port Security and Disable Unused Ports
-Step 1: Configure basic port security on all ports connected to host devices.
-SW-A/B(config)# int range fa0/1 - 22
-SW-A/B(config-if-range)# switchport mode access
-SW-A/B(config-if-range)# switchport port-security
-SW-A/B(config-if-range)# switchport port-security maximum 2
-SW-A/B(config-if-range)# switchport port-security violation shutdown
-SW-A/B(config-if-range)# switchport port-security mac-address sticky
-
-Step 2: Verify port security.
-SW-A/B# show port-security int fa0/1
-
-Step 3: Disable unused ports.
-SW-A/B(config)# int range fa0/5 - 22
-SW-A/B(config-if-range)# shutdown
-
-Step 4: Verify Connectivity
-Ping C1->C2 (Successful)
-Ping C1->D1 (Successful)
-
-Step 5: Verify port security.
-SW-A/B# show port-security int fa0/1
-
-`;
 
 function copyText(text) {
     navigator.clipboard.writeText(text).then(function () {
